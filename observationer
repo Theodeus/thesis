@@ -1,3 +1,5 @@
 startar man två sine oscillatorer efter varandra kan det bli fördröjningar som orsakar fasfel, händer även på square, sätta samma context-starttid hjälper inte
 
 klurigt att konstruera mixern så den blir dynamisk... man behöver ju kunna komma åt den specifika oscillatorns nivå, men vill kunna använda x antal oscillatorer
+
+går riktigt fort att ha något som låter, relativt snabbt att få ihop bara minimum osc, filter, amp om man vet vad man gör
