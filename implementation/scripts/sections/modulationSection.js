@@ -4,7 +4,6 @@ define(["context"], function(context) {
 
     input.connect(output);
 
-
     function connect(destination) {
         output.connect(destination);
     }
@@ -15,11 +14,20 @@ define(["context"], function(context) {
 
     function setValue(propertyName, value) {
         switch (propertyName) {
+            case "level":
+                level = value;
+                setLevel(value);
+                return;
             default:
                 console.log("set", propertyName, value);
                 return;
         }
     }
+
+    function setLevel(value){
+        output.gain.value = value;
+    }
+
 
     return {
         input: input,

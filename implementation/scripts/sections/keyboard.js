@@ -1,9 +1,20 @@
-define(["sections/oscillatorSection"], function(oscSection) {
+define([], function() {
     var note,
         realNote,
         octave = 4,
         down = false,
-        keysDown = {};
+        keysDown = {},
+        targets = [];
+
+    function connect(target){
+        targets.push(target);
+    }
+
+    function send(type, data){
+        for(var i = 0; i < targets.length; i++){
+            targets[i](type, data);
+        }
+    }
 
     window.addEventListener("keydown", function(e) {
         if (keysDown[e.keyCode]) {
@@ -71,7 +82,7 @@ define(["sections/oscillatorSection"], function(oscSection) {
         if (realNote > 127) {
             realNote = 127;
         }
-        oscSection.start(realNote);
+        send("noteOn", {note: realNote});
     });
 
     window.addEventListener("keyup", function(e) {
@@ -125,6 +136,11 @@ define(["sections/oscillatorSection"], function(oscSection) {
         if (realNote > 127) {
             realNote = 127;
         }
-        oscSection.stop(realNote);
+        send("noteOff", {note: realNote});
     });
+
+
+    return {
+        connect: connect
+    };
 });
