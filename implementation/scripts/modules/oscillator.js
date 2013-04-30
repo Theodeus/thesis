@@ -8,7 +8,8 @@ define(["context", "statics"], function(context, STATICS) {
             playing = false,
             currentNote = -1,
             controllers = {},
-            waveform = 0;
+            waveform = 0,
+            modulators = {};
 
         function start(note, time) {
 
@@ -22,7 +23,9 @@ define(["context", "statics"], function(context, STATICS) {
                 oscillator = context.createOscillator();
                 oscillator.connect(destination);
                 oscillator.type = STATICS.waveforms[waveform];
-                oscillator.detune.value = Math.random() * 0.1;
+                for (var source in modulators) {
+                    modulators[source].modulate(oscillator[source]);
+                }
             }
 
             //calculate the frequency of the note we're going to play
@@ -54,10 +57,9 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function setValue(propertyName, value) {
-            switch(propertyName){
-                default:
-                    console.log("set", propertyName, value);
-                    return;
+            switch (propertyName) {
+                default: console.log("set", propertyName, value);
+                return;
             }
         }
 
@@ -67,6 +69,17 @@ define(["context", "statics"], function(context, STATICS) {
 
         function disconnect() {
             destination = null;
+        }
+
+        function registerModulator(source, destination) {
+            switch (destination) {
+                case "frequency":
+                    modulators["frequency"] = source;
+                    break;
+                default:
+                    console.error("unknow modulation destination", destination, source);
+                    break;
+            }
         }
 
         return {

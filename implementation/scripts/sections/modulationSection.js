@@ -1,8 +1,30 @@
-define(["context"], function(context) {
-    var input = context.createGain(),
-        output = context.createGain();
+define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGenerator, lfo, context) {
+    var modules = [],
+        input = function(type, data){
+            switch(type){
+                case "noteOn":
+                    start(data);
+                    break;
+                case "noteOff":
+                    stop(data);
+                    break;
+                default:
+                    console.error("received an unknow type of message", type, data);
+                    break;
+            }
+        };
 
-    input.connect(output);
+    function start(data){
+        for(var i = 0; i < modules.length; i++){
+            modules[i].start(data);
+        }
+    }
+
+    function stop(data){
+        for(var i = 0; i < modules.length; i++){
+            modules[i].stop(data);
+        }
+    }
 
     function connect(destination) {
         output.connect(destination);
