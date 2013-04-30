@@ -5,3 +5,5 @@ klurigt att konstruera mixern så den blir dynamisk... man behöver ju kunna kom
 går riktigt fort att ha något som låter, relativt snabbt att få ihop bara minimum osc, filter, amp om man vet vad man gör
 
 går inte att använda wavetables för noise, för den kurvan får inte repeteras... Då skapas en frekvens. Får använda JS för att generera noise istället.
+
+modulationen blir kneeepig. hade jag kört oscillatorer som bara snurrar hade det varit enklare, men eftersom jag skapar nya oscillatorer för varje not blir det knepigare. registrerar en modulator hos oscillatorn, som sedan skickar propertyn som ska moduleras när den skapar en ny nod. Får se hur det går.

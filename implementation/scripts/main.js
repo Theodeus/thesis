@@ -9,4 +9,7 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     //keyboard routing
     keyboard.connect(oscSection.input);
     keyboard.connect(modSection.input);
+
+    //modulation routing
+    modSection.route("envelopeGenerator", ampSection, "output");
 });

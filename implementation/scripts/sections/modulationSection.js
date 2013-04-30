@@ -26,34 +26,26 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         }
     }
 
-    function connect(destination) {
-        output.connect(destination);
+    //create a modulator and register it at the destination
+    function route(modType, destination, propertyName){
+        var modulator = createModulator(modType);
+        destination.registerModulator(modulator, propertyName);
     }
 
-    function disconnect() {
-        output.disconnect();
-    }
-
-    function setValue(propertyName, value) {
-        switch (propertyName) {
-            case "level":
-                level = value;
-                setLevel(value);
-                return;
+    function createModulator(modType){
+        switch(modType){
+            case "LFO":
+                return new lfo();
+            case "envelopeGenerator":
+                return new envGenerator();
             default:
-                console.log("set", propertyName, value);
-                return;
+                console.error("unknown modulation source", modType);
+                break;
         }
     }
 
-    function setLevel(value){
-        output.gain.value = value;
-    }
-
-
     return {
         input: input,
-        connect: connect,
-        disconnect: disconnect
+        route: route
     };
 });
