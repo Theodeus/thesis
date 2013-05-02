@@ -14,7 +14,6 @@ define(["context", "statics"], function(context, STATICS) {
             var time = data.time || context.currentTime;
             for(var i = 0; i < destinations.length; i++){
                 destinations[i].cancelScheduledValues(time);
-                //time = time + 0.01;
                 destinations[i].setValueAtTime(destinations[i].value, time);
                 destinations[i].linearRampToValueAtTime(destinations[i].parameterValue, time + attack);
                 destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * sustain, time + attack + decay);

@@ -18,7 +18,6 @@ define(["context", "statics"], function(context, STATICS) {
             pitch = getFrequency(note);
             //if glide is on and a note is currently playing, we need to tween the frequency of the currently playing note, or else just set the frequency
             if (playing && glide > 0) {
-                console.log("is playing");
                 for(var i in oscillators){
                     oscillators[i].frequency.cancelScheduledValues(time);
                     oscillators[i].frequency.linearRampToValueAtTime(pitch, time + glide);

@@ -9,3 +9,5 @@ går inte att använda wavetables för noise, för den kurvan får inte repetera
 modulationen blir kneeepig. hade jag kört oscillatorer som bara snurrar hade det varit enklare, men eftersom jag skapar nya oscillatorer för varje not blir det knepigare. registrerar en modulator hos oscillatorn, som sedan skickar propertyn som ska moduleras när den skapar en ny nod. Får se hur det går.
 
 testar att köra oscillatorerna snurrande... annars måste oscillatorn veta om release-parametern på amp-envelopet för att inte stänga av för tidigt..
+
+fick spendera mycket tid för att få till envelopet rätt, och exponentialla kurvor verkar inte funka, samt den med timeconstant är helt skitsvår.
