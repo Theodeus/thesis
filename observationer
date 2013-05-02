@@ -11,3 +11,5 @@ modulationen blir kneeepig. hade jag kört oscillatorer som bara snurrar hade de
 testar att köra oscillatorerna snurrande... annars måste oscillatorn veta om release-parametern på amp-envelopet för att inte stänga av för tidigt..
 
 fick spendera mycket tid för att få till envelopet rätt, och exponentialla kurvor verkar inte funka, samt den med timeconstant är helt skitsvår.
+
+LFO funkade bra när jag fick till det. Lite knepigt med vem som ansvarar för vad i modulationen. Nu registrerar enheterna sina properties till modulationsenheten. Tror att det kan vara bra. Då behöver inte modulationsenheten veta hur de andra enheterna är uppbygda, den bara matar på.
