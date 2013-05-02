@@ -31,12 +31,12 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function stop(note, time) {
-            if (note !== undefined && note !== currentNote) {
-                return;
-            }
-            playing = false;
-            oscillator.onaudioprocess = null;
-            oscillator.disconnect();
+            //if (note !== undefined && note !== currentNote) {
+            //    return;
+            //}
+            //playing = false;
+            //oscillator.onaudioprocess = null;
+            //oscillator.disconnect();
         }
 
         function setValue(propertyName, value) {
@@ -50,6 +50,7 @@ define(["context", "statics"], function(context, STATICS) {
         function connect(target) {
             destination = target;
             oscillator.connect(destination);
+            start();
         }
 
         function disconnect() {

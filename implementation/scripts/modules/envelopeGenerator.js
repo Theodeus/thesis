@@ -3,28 +3,33 @@ define(["context", "statics"], function(context, STATICS) {
     return function() {
 
         var destinations = [],
-            attack = 0.5,
+            attack = 0.1,
             decay = 0.3,
-            sustain = 0.4,
-            release = 1;
+            sustain = 0.7,
+            release = 0.21,
+            currentNote = -1;
 
         function start(data) {
+            currentNote = data.note;
             var time = data.time || context.currentTime;
             for(var i = 0; i < destinations.length; i++){
-                console.log("env start dest", destinations[i], data, time, destinations[i].parameterValue);
                 destinations[i].cancelScheduledValues(time);
-                destinations[i].setValueAtTime(0, time);
+                //time = time + 0.01;
+                destinations[i].setValueAtTime(destinations[i].value, time);
                 destinations[i].linearRampToValueAtTime(destinations[i].parameterValue, time + attack);
                 destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * sustain, time + attack + decay);
             }
         }
 
         function stop(data) {
+            if(data.note !== currentNote){
+                return;
+            }
             var time = data.time || context.currentTime;
             for(var i = 0; i < destinations.length; i++){
-                console.log("env stop dest", destinations[i], data, time, destinations[i].parameterValue);
                 destinations[i].cancelScheduledValues(time);
-                destinations[i].linearRampToValueAtTime(0, time, time + release);
+                destinations[i].setValueAtTime(destinations[i].value, time);
+                destinations[i].linearRampToValueAtTime(0, time + release);
             }
         }
 

@@ -2,47 +2,40 @@ define(["context", "statics"], function(context, STATICS) {
 
     return function() {
         var pitch = 440,
-            glide = 0.05,
+            glide = 0.2,
             oscillator,
             destination,
-            playing = false,
-            currentNote = -1,
             controllers = {},
-            waveform = 0,
-            modulators = {};
+            waveform = "sawtooth",
+            modulators = {},
+            oscillators = {},
+            waveforms = ["sawtooth", "square"],
+            playing = false;
 
         function start(note, time) {
 
-            //stop previous note if it's still playing
-            if (playing && glide === 0) {
-                stop();
-            }
-
-            //create a new oscillator if there's none playing (oscillators are one shot in Web Audio)
-            if (!playing) {
-                oscillator = context.createOscillator();
-                oscillator.connect(destination);
-                oscillator.type = STATICS.waveforms[waveform];
-            }
-
             //calculate the frequency of the note we're going to play
             pitch = getFrequency(note);
-
             //if glide is on and a note is currently playing, we need to tween the frequency of the currently playing note, or else just set the frequency
             if (playing && glide > 0) {
-                oscillator.frequency.setTargetAtTime(pitch, context.currentTime, glide);
+                console.log("is playing");
+                for(var i in oscillators){
+                    oscillators[i].frequency.cancelScheduledValues(time);
+                    oscillators[i].frequency.linearRampToValueAtTime(pitch, time + glide);
+                }
             } else {
-                oscillator.frequency.value = pitch;
+                for(var ii in oscillators){
+                    oscillators[ii].frequency.cancelScheduledValues(time);
+                    oscillators[ii].frequency.setValueAtTime(pitch, time);
+                }
             }
 
             //add moudlation as needed
             for (var source in modulators) {
-                modulators[source].start(oscillator[source]);
+                //modulators[source].start(oscillator[source]);
             }
 
-            oscillator.start(time);
             playing = true;
-            currentNote = note;
         }
 
         function getFrequency(note) {
@@ -51,16 +44,6 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function stop(note, time) {
-            //don't stop the oscillator if it's another key that has been lifted
-            if (note !== undefined && note !== currentNote) {
-                return;
-            }
-
-            //stop moudlation as needed
-            for (var source in modulators) {
-                modulators[source].stop(oscillator[source]);
-            }
-            oscillator.stop(time);
             playing = false;
         }
 
@@ -74,6 +57,23 @@ define(["context", "statics"], function(context, STATICS) {
 
         function connect(target) {
             destination = target;
+            var osc;
+            for(var i = 0; i < waveforms.length; i++){
+                osc = context.createOscillator();
+                osc.type = waveforms[i];
+                oscillators[waveforms[i]] = osc;
+                osc.gain = context.createGain();
+                if(waveform === waveforms[i]){
+                    osc.gain.gain.value = 1;
+                    console.log(1);
+                } else {
+                    osc.gain.gain.value = 0;
+                    console.log(0);
+                }
+                osc.connect(osc.gain);
+                osc.gain.connect(destination);
+                osc.start(0);
+            }
         }
 
         function disconnect() {

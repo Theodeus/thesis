@@ -3,7 +3,10 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
         output = context.createGain(),
         level = 0.2;
 
-    output.gain.value = level;
+    output.gain.value = 0;
+    setInterval(function(){
+        console.log(output.gain.value);
+    },1000);
     input.connect(output);
 
     function connect(destination) {
