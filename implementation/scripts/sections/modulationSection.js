@@ -1,6 +1,5 @@
 define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGenerator, lfo, context) {
-    var activeModules = {},
-        passiveModules = {},
+    var modules = {},
         input = function(type, data){
             switch(type){
                 case "noteOn":
@@ -16,39 +15,36 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         };
 
     function start(data){
-        for(var i in passiveModules){
-            passiveModules[i].start(data);
+        for(var i in modules){
+            modules[i].start(data);
         }
     }
 
     function stop(data){
-        for(var i in passiveModules){
-            passiveModules[i].stop(data);
+        for(var i in modules){
+            modules[i].stop(data);
         }
     }
-
-    //create a modulator for a destination that changes (oscillators are replaced etc.), the destination tells the source when to start
-    function routeActive(modType, destination, modulatorName, propertyName){
-        var modulator = createModulator(modType);
+    function route(modType, destination, modulatorName, propertyName){
+        var modulator = getModulator(modulatorName, modType);
         modulator.name = modulatorName;
-        activeModules[modulatorName] = modulator;
-        destination.registerModulator(modulator, propertyName);
-    }
-
-    //create a modulator for a destination that never changes (always the same gain node in the amp section etc.), the source starts on keyboard actions
-    function routePassive(modType, destination, modulatorName, propertyName){
-        var modulator = createModulator(modType);
-        modulator.name = modulatorName;
-        passiveModules[modulatorName] = modulator;
+        modules[modulatorName] = modulator;
         modulator.modulate(destination[propertyName]);
     }
 
-    function createModulator(modType){
+    function getModulator(modulatorName, modType){
+
+        if(modules[modulatorName]){
+            return modules[modulatorName];
+        }
+
         switch(modType){
             case "LFO":
-                return new lfo();
+                modules[modulatorName] = new lfo();
+                return modules[modulatorName];
             case "envelopeGenerator":
-                return new envGenerator();
+                modules[modulatorName] = new envGenerator();
+                return modules[modulatorName];
             default:
                 console.error("unknown modulation source", modType);
                 break;
@@ -57,7 +53,6 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
 
     return {
         input: input,
-        routeActive: routeActive,
-        routePassive: routePassive
+        route: route
     };
 });

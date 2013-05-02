@@ -3,37 +3,41 @@ define(["context", "statics"], function(context, STATICS) {
     return function() {
 
         var destinations = [],
-            attack = 0.1,
-            decay = 0.3,
-            sustain = 0.7,
-            release = 0.21,
-            currentNote = -1;
+            oscillator = context.createOscillator(),
+            frequency = 2,
+            amountValue = 1,
+            LFOreset = true;
+
+        var amount = context.createGain();
+        amount.gain.value = amountValue;
+
+        oscillator = context.createOscillator(),
+        oscillator.frequency.value = frequency;
+        oscillator.type = "sine";
+        oscillator.start(0);
+        amount.gain.value = amountValue;
+        oscillator.connect(amount);
 
         function start(data) {
-            currentNote = data.note;
-            var time = data.time || context.currentTime;
-            for(var i = 0; i < destinations.length; i++){
-                destinations[i].cancelScheduledValues(time);
-                destinations[i].setValueAtTime(destinations[i].value, time);
-                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue, time + attack);
-                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * sustain, time + attack + decay);
+            if(LFOreset){
+                //new oscillator to reset the phase of the LFO
+                oscillator.disconnect();
+                oscillator = context.createOscillator(),
+                oscillator.frequency.value = frequency;
+                oscillator.type = "sine";
+                oscillator.start(0);
+                amount.gain.value = amountValue;
+                oscillator.connect(amount);
             }
         }
 
         function stop(data) {
-            if(data.note !== currentNote){
-                return;
-            }
-            var time = data.time || context.currentTime;
-            for(var i = 0; i < destinations.length; i++){
-                destinations[i].cancelScheduledValues(time);
-                destinations[i].setValueAtTime(destinations[i].value, time);
-                destinations[i].linearRampToValueAtTime(0, time + release);
-            }
+
         }
 
         function modulate(destination){
             destinations.push(destination);
+            amount.connect(destination);
         }
 
         return {

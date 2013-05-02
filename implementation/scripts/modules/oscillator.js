@@ -1,4 +1,4 @@
-define(["context", "statics"], function(context, STATICS) {
+define(["sections/modulationSection", "context", "statics"], function(modSection, context, STATICS) {
 
     return function() {
         var pitch = 440,
@@ -27,11 +27,6 @@ define(["context", "statics"], function(context, STATICS) {
                     oscillators[ii].frequency.cancelScheduledValues(time);
                     oscillators[ii].frequency.setValueAtTime(pitch, time);
                 }
-            }
-
-            //add moudlation as needed
-            for (var source in modulators) {
-                //modulators[source].start(oscillator[source]);
             }
 
             playing = true;
@@ -72,6 +67,8 @@ define(["context", "statics"], function(context, STATICS) {
                 osc.connect(osc.gain);
                 osc.gain.connect(destination);
                 osc.start(0);
+
+                modSection.route("LFO", osc, "pitchLFO1", "frequency");
             }
         }
 
