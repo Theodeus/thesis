@@ -1,7 +1,7 @@
 define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSection", "context"], function(osc, noiseGen, modSection, context) {
     var oscillatorOne = window.oscillatorOne = new osc(),
         oscillatorTwo = window.oscillatorTwo = new osc(),
-        //noise = new noiseGen(),
+        noise = new noiseGen(),
         output = context.createGain(),
         input = function(type, data){
             switch(type){
@@ -20,32 +20,25 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
     function start(note, time) {
         oscillatorOne.start(note, time || context.currentTime);
         oscillatorTwo.start(note, time || context.currentTime);
-        //noise.start(note, time || context.currentTime);
-        //
-        //oscillatorOne.registerModulator(modSection.getLFO(), "frequency");
-        //for(var osc in oscillatorOne.oscillators){
-            //console.log(osc, oscillatorOne.oscillators);
-            //modSection.routePassive("LFO", oscillatorOne.oscillators[osc], "freuquency");
-        //}
-
+        noise.start(note, time || context.currentTime);
     }
 
     function stop(note, time) {
         oscillatorOne.stop(note, time || context.currentTime);
         oscillatorTwo.stop(note, time || context.currentTime);
-        //noise.stop(note, time || context.currentTime);
+        noise.stop(note, time || context.currentTime);
     }
 
     function connect(destination) {
         oscillatorOne.connect(destination);
         oscillatorTwo.connect(destination);
-        //noise.connect(destination);
+        noise.connect(destination);
     }
 
     function disconnect() {
         oscillatorOne.disconnect();
         oscillatorTwo.disconnect();
-        //noise.disconnect();
+        noise.disconnect();
     }
 
 
