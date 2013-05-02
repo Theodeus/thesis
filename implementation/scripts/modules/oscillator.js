@@ -23,9 +23,6 @@ define(["context", "statics"], function(context, STATICS) {
                 oscillator = context.createOscillator();
                 oscillator.connect(destination);
                 oscillator.type = STATICS.waveforms[waveform];
-                for (var source in modulators) {
-                    modulators[source].modulate(oscillator[source]);
-                }
             }
 
             //calculate the frequency of the note we're going to play
@@ -37,6 +34,12 @@ define(["context", "statics"], function(context, STATICS) {
             } else {
                 oscillator.frequency.value = pitch;
             }
+
+            //add moudlation as needed
+            for (var source in modulators) {
+                modulators[source].start(oscillator[source]);
+            }
+
             oscillator.start(time);
             playing = true;
             currentNote = note;
@@ -51,6 +54,11 @@ define(["context", "statics"], function(context, STATICS) {
             //don't stop the oscillator if it's another key that has been lifted
             if (note !== undefined && note !== currentNote) {
                 return;
+            }
+
+            //stop moudlation as needed
+            for (var source in modulators) {
+                modulators[source].stop(oscillator[source]);
             }
             oscillator.stop(time);
             playing = false;

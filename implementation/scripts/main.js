@@ -11,5 +11,5 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     keyboard.connect(modSection.input);
 
     //modulation routing
-    modSection.route("envelopeGenerator", ampSection, "output");
+    //modSection.route("envelopeGenerator", ampSection, "level");
 });

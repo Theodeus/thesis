@@ -1,5 +1,6 @@
 define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGenerator, lfo, context) {
-    var modules = [],
+    var activeModules = {},
+        passiveModules = {},
         input = function(type, data){
             switch(type){
                 case "noteOn":
@@ -15,21 +16,31 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         };
 
     function start(data){
-        for(var i = 0; i < modules.length; i++){
-            modules[i].start(data);
+        for(var i in passiveModules){
+            passiveModules[i].start(data);
         }
     }
 
     function stop(data){
-        for(var i = 0; i < modules.length; i++){
-            modules[i].stop(data);
+        for(var i in passiveModules){
+            passiveModules[i].stop(data);
         }
     }
 
-    //create a modulator and register it at the destination
-    function route(modType, destination, propertyName){
+    //create a modulator for a destination that changes (oscillators are replaced etc.), the destination tells the source when to start
+    function routeActive(modType, destination, modulatorName, propertyName){
         var modulator = createModulator(modType);
+        modulator.name = modulatorName;
+        activeModules[modulatorName] = modulator;
         destination.registerModulator(modulator, propertyName);
+    }
+
+    //create a modulator for a destination that never changes (always the same gain node in the amp section etc.), the source starts on keyboard actions
+    function routePassive(modType, destination, modulatorName, propertyName){
+        var modulator = createModulator(modType);
+        modulator.name = modulatorName;
+        passiveModules[modulatorName] = modulator;
+        modulator.modulate(destination[propertyName]);
     }
 
     function createModulator(modType){
@@ -46,6 +57,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
 
     return {
         input: input,
-        route: route
+        routeActive: routeActive,
+        routePassive: routePassive
     };
 });

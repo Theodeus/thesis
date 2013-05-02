@@ -1,4 +1,4 @@
-define(["context"], function(context) {
+define(["sections/modulationSection", "context"], function(modSection, context) {
     var input = context.createGain(),
         output = context.createGain(),
         level = 0.2;
@@ -8,6 +8,8 @@ define(["context"], function(context) {
 
     function connect(destination) {
         output.connect(destination);
+        output.gain.parameterValue = level;
+        modSection.routePassive("envelopeGenerator", output, "ampEnv", "gain");
     }
 
     function disconnect() {
