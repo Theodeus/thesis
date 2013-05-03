@@ -1,4 +1,4 @@
-define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterSection", "sections/amplifierSection", "sections/modulationSection", "views/MixerView", "context", "sections/keyboard"], function(oscSection, mixSection, filterSection, ampSection, modSection, MixerView, context, keyboard) {
+define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterSection", "sections/amplifierSection", "sections/modulationSection", "views/MixerView", "views/OscillatorView", "context", "sections/keyboard"], function(oscSection, mixSection, filterSection, ampSection, modSection, MixerView, OscillatorView, context, keyboard) {
 
     //audio routing
     //oscSection.connect(mixSection.input);
@@ -8,6 +8,7 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     ampSection.connect(context.destination);
 
     new MixerView(mixSection.getViewData());
+    new OscillatorView(oscSection.getViewData());
     //keyboard routing
     keyboard.connect(oscSection.input);
     keyboard.connect(modSection.input);

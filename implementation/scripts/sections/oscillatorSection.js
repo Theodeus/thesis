@@ -1,7 +1,9 @@
 define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSection", "context"], function(osc, noiseGen, modSection, context) {
-    var oscillatorOne = window.oscillatorOne = new osc(),
-        oscillatorTwo = window.oscillatorTwo = new osc(),
-        noise = new noiseGen(),
+    var oscillators = {
+            osc1: new osc(),
+            osc2: new osc(),
+            noise: new noiseGen()
+        };
         output = context.createGain(),
         input = function(type, data){
             switch(type){
@@ -18,36 +20,44 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         };
 
     function start(note, time) {
-        oscillatorOne.start(note, time || context.currentTime);
-        oscillatorTwo.start(note, time || context.currentTime);
-        noise.start(note, time || context.currentTime);
+        for(var osc in oscillators){
+            oscillators[osc].start(note, time || context.currentTime);
+        }
     }
 
     function stop(note, time) {
-        oscillatorOne.stop(note, time || context.currentTime);
-        oscillatorTwo.stop(note, time || context.currentTime);
-        noise.stop(note, time || context.currentTime);
+        for(var osc in oscillators){
+            oscillators[osc].stop(note, time || context.currentTime);
+        }
     }
 
     function connect(destination) {
-        oscillatorOne.connect(destination);
-        oscillatorTwo.connect(destination);
-        noise.connect(destination);
+        for(var osc in oscillators){
+            oscillators[osc].connect(destination);
+        }
     }
 
     function disconnect() {
-        oscillatorOne.disconnect();
-        oscillatorTwo.disconnect();
-        noise.disconnect();
+        for(var osc in oscillators){
+            oscillators[osc].disconnect();
+        }
     }
 
     function useMixer(targetMixer){
-        targetMixer.addChannel("osc1");
-        targetMixer.addChannel("osc2");
-        targetMixer.addChannel("noise");
-        targetMixer.routeInput("osc1", oscillatorOne.output);
-        targetMixer.routeInput("osc2", oscillatorTwo.output);
-        targetMixer.routeInput("noise", noise.output);
+        for(var osc in oscillators){
+            targetMixer.addChannel(osc);
+            targetMixer.routeInput(osc, oscillators[osc].output);
+        }
+    }
+
+    function getViewData(){
+        var data = {oscillators: {}};
+
+        for(var osc in oscillators){
+            data["oscillators"][osc] = oscillators[osc].getViewData();
+        }
+        console.log("oscsec getdata", data);
+        return data;
     }
 
 
@@ -57,6 +67,7 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         input: input,
         connect: connect,
         disconnect: disconnect,
-        useMixer: useMixer
+        useMixer: useMixer,
+        getViewData: getViewData
     };
 });

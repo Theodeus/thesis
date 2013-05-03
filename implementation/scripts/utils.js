@@ -14,8 +14,6 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         var slider = document.createElement("input");
         slider.type = "range";
         slider.className = className;
-        slider.style.appearance = rotation || "vertical";
-        slider.style.webkitAppearance = rotation || "slider-vertical";
         slider.min = min;
         slider.max = max;
         slider.step = step;
@@ -31,9 +29,35 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return p;
     }
 
+    function createSelector(className, options, value, callback){
+        var select = document.createElement("select");
+        for(var o in options){
+            var option = document.createElement("option");
+            option.value = options[o];
+            option.innerHTML = options[o];
+            select.appendChild(option);
+        }
+        select.value = value;
+        select.onchange = callback;
+        console.dir(select);
+        return select;
+    }
+
+    function generateChangeCallback(target){
+        return function(e){
+            if(target.value !== undefined){
+                target.value = e.target.value;
+            } else {
+                target = e.target.value;
+            }
+        };
+    }
+
     return {
         createElement: createElement,
         createSlider: createSlider,
-        createParagraph: createParagraph
+        createParagraph: createParagraph,
+        generateChangeCallback: generateChangeCallback,
+        createSelector: createSelector
     };
 });

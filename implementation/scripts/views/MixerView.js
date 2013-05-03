@@ -1,7 +1,5 @@
 define(["utils"], function(utils) {
-
     return function(data){
-        console.log("generating view", data);
         var channels = data.channels,
             i = 0;
         for(var c in channels){
@@ -17,9 +15,5 @@ define(["utils"], function(utils) {
 
             i++;
         }
-
-        return {
-
-        };
     };
 });

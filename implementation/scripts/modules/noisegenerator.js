@@ -52,13 +52,23 @@ define(["context", "statics"], function(context, STATICS) {
             output.disconnect();
         }
 
+        function getViewData(){
+            var data = {
+
+
+            };
+
+            return data;
+        }
+
         return {
             start: start,
             stop: stop,
             setValue: setValue,
             connect: connect,
             disconnect: disconnect,
-            output: output
+            output: output,
+            getViewData: getViewData
         };
     };
 });

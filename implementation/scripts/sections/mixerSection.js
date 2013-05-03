@@ -1,4 +1,4 @@
-define(["context"], function(context) {
+define(["context", "utils"], function(context, utils) {
     var input = context.createGain(),
         output = context.createGain(),
         channels = {};
@@ -54,7 +54,7 @@ define(["context"], function(context) {
                         step: 0.01,
                         value: channels[channel][0].gain.value,
                         type: "slider",
-                        onChange: generateLevelCallback(channel)
+                        onChange: utils.generateChangeCallback(channels[channel][0].gain)
                     }
                 },
                 name: channel
@@ -62,12 +62,6 @@ define(["context"], function(context) {
         }
 
         return data;
-    }
-
-    function generateLevelCallback(channel){
-        return function(event){
-            channels[channel][0].gain.value = event.target.value;
-        };
     }
 
     return {
