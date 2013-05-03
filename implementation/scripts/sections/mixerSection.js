@@ -14,7 +14,7 @@ define(["context", "utils"], function(context, utils) {
         output.disconnect();
     }
 
-    function addChannel(channelName){
+    function addChannel(channelName, gain){
         if(channels[channelName]){
             console.error("channel already exists", channelName, channels);
             return;
@@ -22,6 +22,9 @@ define(["context", "utils"], function(context, utils) {
         var channelGain = context.createGain();
         channelGain.connect(output);
         channels[channelName] = [channelGain];
+        if(gain !== undefined){
+            channelGain.gain.value = gain;
+        }
     }
 
     function routeInput(targetChannel, source){

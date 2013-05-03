@@ -45,7 +45,11 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
 
     function useMixer(targetMixer){
         for(var osc in oscillators){
-            targetMixer.addChannel(osc);
+            if(osc === "noise"){
+                targetMixer.addChannel(osc, 0);
+            } else {
+                targetMixer.addChannel(osc);
+            }
             targetMixer.routeInput(osc, oscillators[osc].output);
         }
     }

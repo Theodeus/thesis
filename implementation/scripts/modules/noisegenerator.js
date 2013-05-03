@@ -17,7 +17,7 @@ define(["context", "statics"], function(context, STATICS) {
                 oscillator.onaudioprocess = generateNoiseCallback();
                 filter = context.createBiquadFilter();
                 filter.type = "highpass";
-                filter.Q.value = 20;
+                filter.Q.value = 0;
                 oscillator.connect(filter);
                 filter.connect(output);
                 start();
