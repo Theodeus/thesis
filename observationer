@@ -17,3 +17,5 @@ LFO funkade bra när jag fick till det. Lite knepigt med vem som ansvarar för v
 Safari har en utdaterad implementation. Inte säker på om den ska stödjas alls..
 
 Fixade mixer. Fick en del andra moduler att falla på plats också. Outputs på oscillatorer etc. De ska inte tänka på var de ska skicka signalen.
+
+Enheterna får ange hur de vill bli påverkade, så får viewsen göra hur de vill. getViewData.

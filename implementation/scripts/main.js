@@ -7,8 +7,9 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     filterSection.connect(ampSection.input);
     ampSection.connect(context.destination);
 
-    new MixerView(mixSection.getViewData());
-    new OscillatorView(oscSection.getViewData());
+    new OscillatorView(oscSection.getViewData(), 0, 200);
+    new MixerView(mixSection.getViewData(), 350, 200);
+
     //keyboard routing
     keyboard.connect(oscSection.input);
     keyboard.connect(modSection.input);

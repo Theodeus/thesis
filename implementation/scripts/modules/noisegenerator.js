@@ -5,9 +5,9 @@ define(["context", "statics"], function(context, STATICS) {
             destination,
             playing = false,
             currentNote = -1,
-            controllers = {},
             BUFFERLENGTH = 1024,
             oscillator,
+            filter,
             output = context.createGain();
 
         function start(note, time) {
@@ -15,7 +15,11 @@ define(["context", "statics"], function(context, STATICS) {
                 playing = true;
                 oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
                 oscillator.onaudioprocess = generateNoiseCallback();
-                oscillator.connect(output);
+                filter = context.createBiquadFilter();
+                filter.type = "highpass";
+                filter.Q.value = 20;
+                oscillator.connect(filter);
+                filter.connect(output);
                 start();
             }
             currentNote = note;
@@ -54,10 +58,30 @@ define(["context", "statics"], function(context, STATICS) {
 
         function getViewData(){
             var data = {
-
-
+                type: "noise",
+                properties: {
+                    color: {
+                        type: "slider",
+                        min: 0,
+                        max: 1,
+                        value: 0,
+                        step: 0.001,
+                        onChange: function(e){
+                            filter.frequency.value = parseFloat(e.target.value) * 10000;
+                        }
+                    },
+                    punch: {
+                        type: "slider",
+                        min: 0,
+                        max: 1,
+                        value: 0,
+                        step: 0.001,
+                        onChange: function(e){
+                            filter.Q.value = parseFloat(e.target.value) * 50;
+                        }
+                    }
+                }
             };
-
             return data;
         }
 
