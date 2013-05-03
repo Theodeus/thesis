@@ -1,14 +1,14 @@
 define(["sections/modulationSection", "context"], function(modSection, context) {
     var input = context.createGain(),
         output = context.createGain(),
-        level = 0.2;
+        _level = 0.5;
 
     output.gain.value = 0;
     input.connect(output);
 
     function connect(destination) {
         output.connect(destination);
-        output.gain.parameterValue = level;
+        output.gain.parameterValue = _level;
         modSection.route("envelopeGenerator", output, "ampEnv", "gain");
     }
 
@@ -16,26 +16,33 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
         output.disconnect();
     }
 
-    function setValue(propertyName, value) {
-        switch (propertyName) {
-            case "level":
-                level = value;
-                setLevel(value);
-                return;
-            default:
-                console.log("set", propertyName, value);
-                return;
-        }
-    }
+    function getViewData(){
+            var data = {
+                type: "amplifier",
+                properties: {
+                    level: {
+                        type: "slider",
+                        min: 0,
+                        max: 1,
+                        value: 0.65,
+                        step: 0.001,
+                        onChange: function(e){
+                            output.gain.parameterValue = _level = Math.pow(parseFloat(e.target.value), 1.5);
+                        }
+                    }
+                }
 
-    function setLevel(value){
-        output.gain.value = value;
-    }
+            };
+            return data;
+        }
+
+
 
 
     return {
         input: input,
         connect: connect,
-        disconnect: disconnect
+        disconnect: disconnect,
+        getViewData: getViewData
     };
 });

@@ -50,7 +50,7 @@ define(["context"], function(context) {
                         value: 0,
                         step: 0.001,
                         onChange: function(e){
-                            filter.Q.value = _resonance = Math.pow(parseFloat(e.target.value), 3.5) * 50;
+                            filter.Q.value = _resonance = Math.pow(parseFloat(e.target.value), 4.5) * 50;
                         }
                     }
                 }

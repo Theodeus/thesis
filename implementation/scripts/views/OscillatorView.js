@@ -4,8 +4,11 @@ define(["utils"], function(utils) {
             i = 0;
 
         var container = utils.createElement("div", "oscillatorSection", x, y, "#654");
+        title = utils.createParagraph("sectionTitle", "Oscillators");
+        container.appendChild(title);
+
         for(var o in oscillators){
-            var section = utils.createElement("div", "oscillator", 101 * i + 2, 2, "#543"),
+            var section = utils.createElement("div", "oscillator", 101 * i + 2, 30, "#543"),
                 title = utils.createParagraph("sectionTitle", o),
                 slider;
             section.appendChild(title);
