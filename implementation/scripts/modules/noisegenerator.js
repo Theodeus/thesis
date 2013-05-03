@@ -70,7 +70,7 @@ define(["context", "statics"], function(context, STATICS) {
                             filter.frequency.value = parseFloat(e.target.value) * 10000;
                         }
                     },
-                    punch: {
+                    whistle: {
                         type: "slider",
                         min: 0,
                         max: 1,

@@ -56,7 +56,6 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         for(var osc in oscillators){
             data["oscillators"][osc] = oscillators[osc].getViewData();
         }
-        console.log("oscsec getdata", data);
         return data;
     }
 

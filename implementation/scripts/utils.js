@@ -39,7 +39,6 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         }
         select.value = value;
         select.onchange = callback;
-        console.dir(select);
         return select;
     }
 
