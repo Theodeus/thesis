@@ -7,14 +7,16 @@ define(["context", "statics"], function(context, STATICS) {
             currentNote = -1,
             controllers = {},
             BUFFERLENGTH = 1024,
-            oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
+            oscillator,
+            output = context.createGain();
 
         function start(note, time) {
-            //create a new oscillator if there's none playing (oscillators are one shot in Web Audio)
             if (!playing) {
                 playing = true;
+                oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
                 oscillator.onaudioprocess = generateNoiseCallback();
-                oscillator.connect(destination);
+                oscillator.connect(output);
+                start();
             }
             currentNote = note;
         }
@@ -31,12 +33,7 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function stop(note, time) {
-            //if (note !== undefined && note !== currentNote) {
-            //    return;
-            //}
-            //playing = false;
-            //oscillator.onaudioprocess = null;
-            //oscillator.disconnect();
+
         }
 
         function setValue(propertyName, value) {
@@ -48,14 +45,11 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function connect(target) {
-            destination = target;
-            oscillator.connect(destination);
-            start();
+            ouput.connect(target);
         }
 
         function disconnect() {
-            destination = null;
-            oscillator.disconnect();
+            output.disconnect();
         }
 
         return {
@@ -63,7 +57,8 @@ define(["context", "statics"], function(context, STATICS) {
             stop: stop,
             setValue: setValue,
             connect: connect,
-            disconnect: disconnect
+            disconnect: disconnect,
+            output: output
         };
     };
 });

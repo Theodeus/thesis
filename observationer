@@ -15,3 +15,5 @@ fick spendera mycket tid för att få till envelopet rätt, och exponentialla ku
 LFO funkade bra när jag fick till det. Lite knepigt med vem som ansvarar för vad i modulationen. Nu registrerar enheterna sina properties till modulationsenheten. Tror att det kan vara bra. Då behöver inte modulationsenheten veta hur de andra enheterna är uppbygda, den bara matar på.
 
 Safari har en utdaterad implementation. Inte säker på om den ska stödjas alls..
+
+Fixade mixer. Fick en del andra moduler att falla på plats också. Outputs på oscillatorer etc. De ska inte tänka på var de ska skicka signalen.

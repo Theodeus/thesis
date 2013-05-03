@@ -41,12 +41,22 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         noise.disconnect();
     }
 
+    function useMixer(targetMixer){
+        targetMixer.addChannel("osc1");
+        targetMixer.addChannel("osc2");
+        targetMixer.addChannel("noise");
+        targetMixer.routeInput("osc1", oscillatorOne.output);
+        targetMixer.routeInput("osc2", oscillatorTwo.output);
+        targetMixer.routeInput("noise", noise.output);
+    }
+
 
     return {
         start: start,
         stop: stop,
         input: input,
         connect: connect,
-        disconnect: disconnect
+        disconnect: disconnect,
+        useMixer: useMixer
     };
 });
