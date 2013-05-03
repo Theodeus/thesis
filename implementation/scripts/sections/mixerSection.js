@@ -65,8 +65,8 @@ define(["context"], function(context) {
     }
 
     function generateLevelCallback(channel){
-        return function(value){
-            channels[channel][0].gain.value = value;
+        return function(event){
+            channels[channel][0].gain.value = event.target.value;
         };
     }
 
