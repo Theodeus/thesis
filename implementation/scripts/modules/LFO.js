@@ -40,10 +40,36 @@ define(["context", "statics"], function(context, STATICS) {
             amount.connect(destination);
         }
 
+        function getViewData(){
+            var data = {
+                type: "oscillator",
+                properties: {
+                    /*waveform: {
+                        type: "selector",
+                        options: waveforms,
+                        currentOption: waveform,
+                        onChange: function(e){
+                            var waveform = e.target.value;
+                            for(var osc in oscillators){
+                                if(oscillators[osc].type === waveform){
+                                    oscillators[osc].gain.gain.value = 1;
+                                } else {
+                                    oscillators[osc].gain.gain.value = 0;
+                                }
+                            }
+                        }
+                    }*/
+                }
+
+            };
+            return data;
+        }
+
         return {
             start: start,
             stop: stop,
-            modulate: modulate
+            modulate: modulate,
+            getViewData: getViewData
         };
     };
 });

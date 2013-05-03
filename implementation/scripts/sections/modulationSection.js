@@ -51,8 +51,18 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         }
     }
 
+    function getViewData(){
+        var data = {modules: {}};
+
+        for(var mod in modules){
+            data["modules"][mod] = modules[mod].getViewData();
+        }
+        return data;
+    }
+
     return {
         input: input,
-        route: route
+        route: route,
+        getViewData: getViewData
     };
 });

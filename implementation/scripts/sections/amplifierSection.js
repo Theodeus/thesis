@@ -16,28 +16,25 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
         output.disconnect();
     }
 
-    function getViewData(){
-            var data = {
-                type: "amplifier",
-                properties: {
-                    level: {
-                        type: "slider",
-                        min: 0,
-                        max: 1,
-                        value: 0.65,
-                        step: 0.001,
-                        onChange: function(e){
-                            output.gain.parameterValue = _level = Math.pow(parseFloat(e.target.value), 1.5);
-                        }
+    function getViewData() {
+        var data = {
+            type: "amplifier",
+            properties: {
+                level: {
+                    type: "slider",
+                    min: 0,
+                    max: 1,
+                    value: 0.65,
+                    step: 0.001,
+                    onChange: function(e) {
+                        output.gain.parameterValue = _level = Math.pow(parseFloat(e.target.value), 1.5);
                     }
                 }
+            }
 
-            };
-            return data;
-        }
-
-
-
+        };
+        return data;
+    }
 
     return {
         input: input,
