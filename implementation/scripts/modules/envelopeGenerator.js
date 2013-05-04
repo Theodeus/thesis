@@ -1,13 +1,17 @@
 define(["context", "statics"], function(context, STATICS) {
 
-    return function() {
+    return function(data) {
+
+        if(!data){
+            data = {};
+        }
 
         var destinations = [],
-            _attack = 0.1,
-            _decay = 0.3,
-            _sustain = 0.7,
-            _release = 0.21,
-            _amount = 1,
+            _attack = data.attack === undefined ? 0.1 : data.attack,
+            _decay = data.decay === undefined ? 0.3 : data.decay,
+            _sustain = data.sustain === undefined ? 0.7 : data.sustain,
+            _release = data.release === undefined ? 0.21 : data.release,
+            _amount = data.amount === undefined ? 1 : data.amount,
             currentNote = -1;
 
         function start(data) {

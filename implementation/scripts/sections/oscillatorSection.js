@@ -19,6 +19,10 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
             }
         };
 
+    for(var o in oscillators){
+        oscillators[o].init();
+    }
+
     function start(note, time) {
         for(var osc in oscillators){
             oscillators[osc].start(note, time || context.currentTime);

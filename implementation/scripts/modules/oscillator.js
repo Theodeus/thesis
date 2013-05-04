@@ -9,32 +9,9 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             waveforms = ["sawtooth", "square"],
             playing = false,
             output = context.createGain(),
-            firstStart = true,
             that = this;
 
         function start(note, time) {
-
-            if(firstStart){
-                var osc;
-                for(var i = 0; i < waveforms.length; i++){
-                    osc = context.createOscillator();
-                    osc.type = waveforms[i];
-                    oscillators[waveforms[i]] = osc;
-                    osc.gain = context.createGain();
-                    if(waveform === waveforms[i]){
-                        osc.gain.gain.value = 1;
-                    } else {
-                        osc.gain.gain.value = 0;
-                    }
-                    osc.connect(osc.gain);
-                    osc.gain.connect(output);
-                    osc.start(0);
-
-                    modSection.route("LFO", osc, "pitchLFO1", "frequency");
-
-                    firstStart = false;
-                }
-            }
 
             //calculate the frequency of the note we're going to play
             pitch = getFrequency(note);
@@ -66,6 +43,26 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
 
         function connect(target) {
             output.connect(target);
+        }
+
+        function init(){
+            var osc;
+            for(var i = 0; i < waveforms.length; i++){
+                osc = context.createOscillator();
+                osc.type = waveforms[i];
+                oscillators[waveforms[i]] = osc;
+                osc.gain = context.createGain();
+                if(waveform === waveforms[i]){
+                    osc.gain.gain.value = 1;
+                } else {
+                    osc.gain.gain.value = 0;
+                }
+                osc.connect(osc.gain);
+                osc.gain.connect(output);
+                osc.start(0);
+
+                modSection.route("LFO", osc, "pitchLFO1", "frequency");
+            }
         }
 
         function disconnect() {
@@ -130,7 +127,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             connect: connect,
             disconnect: disconnect,
             output: output,
-            getViewData: getViewData
+            getViewData: getViewData,
+            init: init
         };
     };
 });

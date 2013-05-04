@@ -11,6 +11,7 @@ define(["sections/modulationSection","context"], function(modSection, context) {
 
     filter.type = type;
     filter.frequency.value = _cutoffFrequency;
+    filter.frequency.parameterValue = _cutoffFrequency;
     filter.Q.value = _resonance;
 
     function connect(destination) {
@@ -41,7 +42,7 @@ define(["sections/modulationSection","context"], function(modSection, context) {
                         value: 0.54,
                         step: 0.001,
                         onChange: function(e){
-                            filter.frequency.value = _cutoffFrequency = Math.pow(parseFloat(e.target.value), 3.5) * 10000 + 20;
+                            filter.frequency.value = filter.frequency.parameterValue = _cutoffFrequency = Math.pow(parseFloat(e.target.value), 3.5) * 10000 + 20;
                         }
                     },
                     resonance: {

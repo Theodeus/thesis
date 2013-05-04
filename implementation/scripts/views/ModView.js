@@ -5,17 +5,18 @@ define(["utils"], function(utils) {
             i = 0,
             j = 0;
 
-        var container = utils.createElement("div", "modSection", x, y, "#374");
+        var container = utils.createElement("div", "modSection", x, y, "#123");
         title = utils.createParagraph("sectionTitle", "Modulation");
         container.appendChild(title);
 
         for(var m in modules){
-            var section = utils.createElement("div", "modUnit", 101 * i + 2, 30, "#593"),
+            var section = utils.createElement("div", "modUnit", 261 * i + 2, 30, "#234"),
                 title = utils.createParagraph("sectionTitle", m);
             section.appendChild(title);
+            j = 0;
             if(modules[m].properties){
                 for(var prop in modules[m].properties){
-                    var propSection = utils.createElement("div", "modProperty", 51 * j + 2, 30, "#596");
+                    var propSection = utils.createElement("div", "modProperty"+modules[m].properties[prop].type, 51 * j + 2, 30, "#456");
                     title = utils.createParagraph("propertyTitle", prop);
                     propSection.appendChild(title);
 

@@ -3,7 +3,6 @@ define(["context", "statics"], function(context, STATICS) {
     return function() {
         var pitch = 440,
             destination,
-            playing = false,
             currentNote = -1,
             BUFFERLENGTH = 1024,
             oscillator,
@@ -11,17 +10,6 @@ define(["context", "statics"], function(context, STATICS) {
             output = context.createGain();
 
         function start(note, time) {
-            if (!playing) {
-                playing = true;
-                oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
-                oscillator.onaudioprocess = generateNoiseCallback();
-                filter = context.createBiquadFilter();
-                filter.type = "highpass";
-                filter.Q.value = 0;
-                oscillator.connect(filter);
-                filter.connect(output);
-                start();
-            }
             currentNote = note;
         }
 
@@ -54,6 +42,17 @@ define(["context", "statics"], function(context, STATICS) {
 
         function disconnect() {
             output.disconnect();
+        }
+
+        function init(){
+            oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
+            oscillator.onaudioprocess = generateNoiseCallback();
+            filter = context.createBiquadFilter();
+            filter.type = "highpass";
+            filter.Q.value = 0;
+            oscillator.connect(filter);
+            filter.connect(output);
+            start();
         }
 
         function getViewData(){
@@ -92,7 +91,8 @@ define(["context", "statics"], function(context, STATICS) {
             connect: connect,
             disconnect: disconnect,
             output: output,
-            getViewData: getViewData
+            getViewData: getViewData,
+            init: init
         };
     };
 });

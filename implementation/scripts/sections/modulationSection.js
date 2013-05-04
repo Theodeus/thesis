@@ -25,14 +25,13 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
             modules[i].stop(data);
         }
     }
-    function route(modType, destination, modulatorName, propertyName){
-        var modulator = getModulator(modulatorName, modType);
-        modulator.name = modulatorName;
-        modules[modulatorName] = modulator;
+    function route(modType, destination, modulatorName, propertyName, modulatorData){
+        console.log("route", modType);
+        var modulator = getModulator(modulatorName, modType, modulatorData);
         modulator.modulate(destination[propertyName]);
     }
 
-    function getModulator(modulatorName, modType){
+    function getModulator(modulatorName, modType, modulatorData){
 
         if(modules[modulatorName]){
             return modules[modulatorName];
@@ -40,10 +39,11 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
 
         switch(modType){
             case "LFO":
-                modules[modulatorName] = new lfo();
+                modules[modulatorName] = new lfo(modulatorData);
+                console.log("added LFO", modules);
                 return modules[modulatorName];
             case "envelopeGenerator":
-                modules[modulatorName] = new envGenerator();
+                modules[modulatorName] = new envGenerator(modulatorData);
                 return modules[modulatorName];
             default:
                 console.error("unknown modulation source", modType);
