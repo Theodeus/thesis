@@ -6,7 +6,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             _glide = 0.2,
             waveform = "sawtooth",
             oscillators = {},
-            waveforms = ["sawtooth", "square"],
+            waveforms = ["sawtooth", "square", "triangle"],
             playing = false,
             output = context.createGain(),
             that = this;

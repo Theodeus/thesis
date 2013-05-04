@@ -4,12 +4,13 @@ define(["sections/modulationSection","context"], function(modSection, context) {
         output = context.createGain(),
         _cutoffFrequency = 1200,
         _resonance = 0,
-        type = "lowpass";
+        _type = "lowpass",
+        types = ["lowpass", "highpass", "bandpass"];
 
     input.connect(filter);
     filter.connect(output);
 
-    filter.type = type;
+    filter.type = _type;
     filter.frequency.value = _cutoffFrequency;
     filter.frequency.parameterValue = _cutoffFrequency;
     filter.Q.value = _resonance;
@@ -35,6 +36,14 @@ define(["sections/modulationSection","context"], function(modSection, context) {
             var data = {
                 type: "filter",
                 properties: {
+                    type: {
+                        type: "selector",
+                        options: types,
+                        currentOption: _type,
+                        onChange: function(e){
+                            filter.type = _type = e.target.value;
+                        }
+                    },
                     cutoffFrequency: {
                         type: "slider",
                         min: 0,
@@ -43,6 +52,7 @@ define(["sections/modulationSection","context"], function(modSection, context) {
                         step: 0.001,
                         onChange: function(e){
                             filter.frequency.value = filter.frequency.parameterValue = _cutoffFrequency = Math.pow(parseFloat(e.target.value), 3.5) * 10000 + 20;
+                            console.log(filter.frequency.value);
                         }
                     },
                     resonance: {
