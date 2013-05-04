@@ -7,6 +7,7 @@ define(["context", "statics"], function(context, STATICS) {
             _decay = 0.3,
             _sustain = 0.7,
             _release = 0.21,
+            _amount = 1,
             currentNote = -1;
 
         function start(data) {
@@ -15,8 +16,8 @@ define(["context", "statics"], function(context, STATICS) {
             for(var i = 0; i < destinations.length; i++){
                 destinations[i].cancelScheduledValues(time);
                 destinations[i].setValueAtTime(destinations[i].value, time);
-                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue, time + _attack);
-                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * _sustain, time + _attack + _decay);
+                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * _amount, time + _attack);
+                destinations[i].linearRampToValueAtTime(destinations[i].parameterValue * _sustain * _amount, time + _attack + _decay);
             }
         }
 
@@ -78,6 +79,16 @@ define(["context", "statics"], function(context, STATICS) {
                         step: 0.01,
                         onChange: function(e){
                             _release = Math.pow(parseFloat(e.target.value), 1.2);
+                        }
+                    },
+                    amount: {
+                        type: "slider",
+                        min: 0.01,
+                        max: 1,
+                        value: 1,
+                        step: 0.01,
+                        onChange: function(e){
+                            _amount = parseFloat(e.target.value);
                         }
                     }
                 }

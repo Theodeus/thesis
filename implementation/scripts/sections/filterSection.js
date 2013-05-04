@@ -1,4 +1,4 @@
-define(["context"], function(context) {
+define(["sections/modulationSection","context"], function(modSection, context) {
     var input = context.createGain(),
         filter = context.createBiquadFilter(),
         output = context.createGain(),
@@ -15,6 +15,7 @@ define(["context"], function(context) {
 
     function connect(destination) {
         output.connect(destination);
+        modSection.route("envelopeGenerator", filter, "filterEnv", "frequency");
     }
 
     function disconnect() {
