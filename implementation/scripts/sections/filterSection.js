@@ -51,8 +51,12 @@ define(["sections/modulationSection","context"], function(modSection, context) {
                         value: 0.54,
                         step: 0.001,
                         onChange: function(e){
-                            filter.frequency.value = filter.frequency.parameterValue = _cutoffFrequency = Math.pow(parseFloat(e.target.value), 3.5) * 10000 + 20;
-                            console.log(filter.frequency.value);
+                            var value = Math.pow(parseFloat(e.target.value), 3.5) * 10000 + 20;
+                            filter.frequency.cancelScheduledValues(context.currentTime);
+                            filter.frequency.parameterValue = _cutoffFrequency = value;
+                            filter.frequency.parameterMinValue = _cutoffFrequency / 2;
+                            filter.frequency.setValueAtTime(value, context.currentTime);
+                            console.log(filter.frequency.parameterValue, filter.frequency.parameterMinValue);
                         }
                     },
                     resonance: {
