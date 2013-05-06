@@ -12,6 +12,7 @@ define(["context", "statics"], function(context, STATICS) {
             _sustain = data.sustain === undefined ? 0.7 : data.sustain,
             _release = data.release === undefined ? 0.21 : data.release,
             _amount = data.amount === undefined ? 0 : data.amount,
+            _data = data,
             currentNote = -1;
 
         function start(data) {
@@ -84,7 +85,7 @@ define(["context", "statics"], function(context, STATICS) {
                     release: {
                         type: "slider",
                         min: 0.01,
-                        max: 1,
+                        max: 10,
                         value: 0.2,
                         step: 0.01,
                         onChange: function(e){
@@ -93,7 +94,7 @@ define(["context", "statics"], function(context, STATICS) {
                     },
                     amount: {
                         type: "slider",
-                        min: -1,
+                        min: _data.amountMin === undefined ? -1 : _data.amountMin,
                         max: 1,
                         value: 0,
                         step: 0.01,

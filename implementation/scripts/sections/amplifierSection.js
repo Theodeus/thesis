@@ -9,7 +9,7 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
     function connect(destination) {
         output.connect(destination);
         output.gain.parameterValue = _level;
-        modSection.route("envelopeGenerator", output, "ampEnv", "gain");
+        modSection.route("envelopeGenerator", output, "ampEnv", "gain", {amountMin: 0});
     }
 
     function disconnect() {
