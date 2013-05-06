@@ -5,30 +5,30 @@ define(["utils"], function(utils) {
             i = 0,
             j = 0;
 
-        var container = utils.createElement("div", "modSection", x, y, "#123");
-        title = utils.createParagraph("sectionTitle", "Modulation");
+        var container = utils.createElement("div", x, y, "#123", "modSection");
+        title = utils.createParagraph("Modulation", "sectionTitle");
         container.appendChild(title);
 
         for(var m in modules){
-            var section = utils.createElement("div", "modUnit", 261 * i + 2, 30, "#234"),
-                title = utils.createParagraph("sectionTitle", m);
+            var section = utils.createElement("div", 261 * i + 2, 30, "#234", "modUnit"),
+                title = utils.createParagraph(m, "sectionTitle");
             section.appendChild(title);
             j = 0;
             if(modules[m].properties){
                 for(var prop in modules[m].properties){
-                    var propSection = utils.createElement("div", "modProperty"+modules[m].properties[prop].type, 51 * j + 2, 30, "#456");
-                    title = utils.createParagraph("propertyTitle", prop);
+                    var propSection = utils.createElement("div", 51 * j + 2, 30, "#456", "modProperty"+modules[m].properties[prop].type);
+                    title = utils.createParagraph(prop, "propertyTitle");
                     propSection.appendChild(title);
 
                     if(modules[m].properties[prop].type === "slider"){
                         var propdata = modules[m].properties[prop];
-                        var slider = utils.createSlider(propdata.onChange, "modSlider", propdata.min, propdata.max, propdata.value, propdata.step);
+                        var slider = utils.createSlider(propdata.onChange, propdata.min, propdata.max, propdata.value, propdata.step, "modSlider");
                         propSection.appendChild(slider);
                     } else if(modules[m].properties[prop].type === "selector"){
-                        var selection = utils.createSelector("selector", modules[m].properties[prop].options, modules[m].properties[prop].currentOption, modules[m].properties[prop].onChange);
+                        var selection = utils.createSelector(modules[m].properties[prop].onChange, modules[m].properties[prop].currentOption, modules[m].properties[prop].options, "selector");
                         propSection.appendChild(selection);
                     } else if(modules[m].properties[prop].type === "switch"){
-                        var s = utils.createSwitch(modules[m].properties[prop].onChange, "modChecker", modules[m].properties[prop].value);
+                        var s = utils.createSwitch(modules[m].properties[prop].onChange, modules[m].properties[prop].value, "modChecker");
                         propSection.appendChild(s);
                     }
                     section.appendChild(propSection);

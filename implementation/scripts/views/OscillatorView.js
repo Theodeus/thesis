@@ -3,28 +3,28 @@ define(["utils"], function(utils) {
         var oscillators = data.oscillators,
             i = 0;
 
-        var container = utils.createElement("div", "oscillatorSection", x, y, "#654");
-        title = utils.createParagraph("sectionTitle", "Oscillators");
+        var container = utils.createElement("div", x, y, "#654", "oscillatorSection");
+        title = utils.createParagraph("Oscillators", "sectionTitle");
         container.appendChild(title);
 
         for(var o in oscillators){
-            var section = utils.createElement("div", "oscillator", 101 * i + 2, 30, "#543"),
-                title = utils.createParagraph("sectionTitle", o),
+            var section = utils.createElement("div", 101 * i + 2, 30, "#543", "oscillator"),
+                title = utils.createParagraph(o, "sectionTitle"),
                 slider;
             section.appendChild(title);
 
             if(oscillators[o].properties){
                 for(var prop in oscillators[o].properties){
 
-                    title = utils.createParagraph("propertyTitle", prop);
+                    title = utils.createParagraph(prop, "propertyTitle");
                     section.appendChild(title);
 
                     if(oscillators[o].properties[prop].type === "slider"){
                         var propdata = oscillators[o].properties[prop];
-                        slider = utils.createSlider(propdata.onChange, "oscSlider", propdata.min, propdata.max, propdata.value, propdata.step);
+                        slider = utils.createSlider(propdata.onChange, propdata.min, propdata.max, propdata.value, propdata.step, "oscSlider");
                         section.appendChild(slider);
                     } else if(oscillators[o].properties[prop].type === "selector"){
-                        var selection = utils.createSelector("selector", oscillators[o].properties[prop].options, oscillators[o].properties[prop].currentOption, oscillators[o].properties[prop].onChange);
+                        var selection = utils.createSelector(oscillators[o].properties[prop].onChange, oscillators[o].properties[prop].currentOption, oscillators[o].properties[prop].options, "selector");
                         section.appendChild(selection);
                     }
                 }

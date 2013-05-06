@@ -1,6 +1,6 @@
 define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGenerator, lfo, context) {
 
-    function createElement(type, className, x, y, bgColor){
+    function createElement(type, x, y, bgColor, className){
         var elem = document.createElement(type);
         elem.style.position = "absolute";
         elem.className = className;
@@ -10,7 +10,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return elem;
     }
 
-    function createSlider(callback, className, min, max, value, step, rotation){
+    function createSlider(callback, min, max, value, step, className){
         var slider = document.createElement("input");
         slider.type = "range";
         slider.className = className;
@@ -22,14 +22,14 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return slider;
     }
 
-    function createParagraph(className, text){
+    function createParagraph(value, className){
         var p = document.createElement("p");
         p.className = className;
-        p.innerHTML = text;
+        p.innerHTML = value;
         return p;
     }
 
-    function createSelector(className, options, value, callback){
+    function createSelector(callback, value, options, className){
         var select = document.createElement("select");
         for(var o in options){
             var option = document.createElement("option");
@@ -42,7 +42,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return select;
     }
 
-    function createSwitch(callback, className, value){
+    function createSwitch(callback, value, className){
         var s = document.createElement("input");
         s.type = "checkbox";
         s.className = className;

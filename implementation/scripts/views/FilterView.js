@@ -1,20 +1,20 @@
 define(["utils"], function(utils) {
     return function(data, x, y){
 
-        var container = utils.createElement("div", "filterSection", x, y, "#852"),
-            title = utils.createParagraph("sectionTitle", "Filter");
+        var container = utils.createElement("div", x, y, "#852", "filterSection"),
+            title = utils.createParagraph("Filter", "sectionTitle");
         container.appendChild(title);
         if(data.properties){
             for(var prop in data.properties){
-                title = utils.createParagraph("propertyTitle", prop);
+                title = utils.createParagraph(prop, "propertyTitle");
                 container.appendChild(title);
 
                 if(data.properties[prop].type === "slider"){
                     var propdata = data.properties[prop];
-                    slider = utils.createSlider(propdata.onChange, "filterSlider", propdata.min, propdata.max, propdata.value, propdata.step);
+                    slider = utils.createSlider(propdata.onChange, propdata.min, propdata.max, propdata.value, propdata.step, "filterSlider");
                     container.appendChild(slider);
                 } else if(data.properties[prop].type === "selector"){
-                    var selection = utils.createSelector("selector", data.properties[prop].options, data.properties[prop].currentOption, data.properties[prop].onChange);
+                    var selection = utils.createSelector(data.properties[prop].onChange, data.properties[prop].currentOption, data.properties[prop].options, "selector");
                     container.appendChild(selection);
                 }
             }
