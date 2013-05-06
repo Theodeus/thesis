@@ -1,7 +1,7 @@
 define(["utils"], function(utils) {
     return function(data, x, y){
 
-        var container = utils.createElement("div", x, y, "#915", "ampSection"),
+        var container = utils.createElement("div", "ampSection"),
             title = utils.createParagraph("Amplifier", "sectionTitle");
         container.appendChild(title);
         if(data.properties){

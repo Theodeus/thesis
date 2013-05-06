@@ -3,12 +3,12 @@ define(["utils"], function(utils) {
         var oscillators = data.oscillators,
             i = 0;
 
-        var container = utils.createElement("div", x, y, "#654", "oscillatorSection");
+        var container = utils.createElement("div", "oscillatorSection");
         title = utils.createParagraph("Oscillators", "sectionTitle");
         container.appendChild(title);
 
         for(var o in oscillators){
-            var section = utils.createElement("div", 101 * i + 2, 30, "#543", "oscillator"),
+            var section = utils.createElement("div", "oscillator"),
                 title = utils.createParagraph(o, "sectionTitle"),
                 slider;
             section.appendChild(title);
