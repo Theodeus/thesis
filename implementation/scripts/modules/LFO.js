@@ -7,7 +7,8 @@ define(["context", "statics"], function(context, STATICS) {
             _frequency = 2,
             _amount = 1,
             LFOreset = true,
-            _waveform = "triangle";
+            _waveform = "triangle",
+            _tempoSync = false;
 
         var amountNode = context.createGain();
         amountNode.gain.value = _amount;
@@ -62,8 +63,20 @@ define(["context", "statics"], function(context, STATICS) {
                         value: 1,
                         step: 0.001,
                         onChange: function(e) {
-                            oscillator.frequency.value = _frequency = parseFloat(e.target.value);
-                            console.log(_frequency);
+                            _frequency = parseFloat(e.target.value);
+                            changeFrequency(_frequency);
+                        }
+                    },
+                    tempoSync: {
+                        type: "switch",
+                        value: "deselected",
+                        onChange: function(e) {
+                            if(e.target.checked){
+                                _tempoSync = true;
+                            } else {
+                                _tempoSync = false;
+                            }
+                            changeFrequency(_frequency);
                         }
                     },
                     waveform: {
@@ -78,6 +91,30 @@ define(["context", "statics"], function(context, STATICS) {
 
             };
             return data;
+        }
+
+        function changeFrequency(freq){
+            if(_tempoSync){
+                var value = freq / 200;
+                if(value >= 0 && value < 0.14){
+                    value = (60 / context.tempo) / 4;
+                } else if(value >= 0.14 && value < 0.28) {
+                    value = (60 / context.tempo) / 2;
+                } else if(value >= 0.28 && value < 0.42) {
+                    value = (60 / context.tempo);
+                } else if(value >= 0.42 && value < 0.56) {
+                    value = (60 / context.tempo) * 2;
+                } else if(value >= 0.56 && value < 0.7) {
+                    value = (60 / context.tempo) * 4;
+                } else if(value >= 0.7 && value < 0.84) {
+                    value = (60 / context.tempo) * 8;
+                } else {
+                    value = (60 / context.tempo) * 16;
+                }
+                oscillator.frequency.value = value;
+            } else {
+                oscillator.frequency.value = freq;
+            }
         }
 
         return {

@@ -42,6 +42,15 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return select;
     }
 
+    function createSwitch(callback, className, value){
+        var s = document.createElement("input");
+        s.type = "checkbox";
+        s.className = className;
+        s.checked = value === "selected" ? true : false;
+        s.onchange = callback;
+        return s;
+    }
+
     function generateChangeCallback(target){
         return function(e){
             if(target.value !== undefined){
@@ -57,6 +66,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         createSlider: createSlider,
         createParagraph: createParagraph,
         generateChangeCallback: generateChangeCallback,
-        createSelector: createSelector
+        createSelector: createSelector,
+        createSwitch: createSwitch
     };
 });

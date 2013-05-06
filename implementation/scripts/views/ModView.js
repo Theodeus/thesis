@@ -27,6 +27,9 @@ define(["utils"], function(utils) {
                     } else if(modules[m].properties[prop].type === "selector"){
                         var selection = utils.createSelector("selector", modules[m].properties[prop].options, modules[m].properties[prop].currentOption, modules[m].properties[prop].onChange);
                         propSection.appendChild(selection);
+                    } else if(modules[m].properties[prop].type === "switch"){
+                        var s = utils.createSwitch(modules[m].properties[prop].onChange, "modChecker", modules[m].properties[prop].value);
+                        propSection.appendChild(s);
                     }
                     section.appendChild(propSection);
                     j++;
