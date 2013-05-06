@@ -6,10 +6,11 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             _glide = 0.2,
             waveform = "sawtooth",
             oscillators = {},
+            unisonOscillators = {},
             waveforms = ["sawtooth", "square", "triangle"],
             playing = false,
             output = context.createGain(),
-            that = this;
+            _unison = false;
 
         function start(note, time) {
 
@@ -21,11 +22,25 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 for(var ii in oscillators){
                     oscillators[ii].frequency.cancelScheduledValues(time);
                     oscillators[ii].frequency.linearRampToValueAtTime(_pitch, time + _glide);
+                    if(_unison){
+                        var oscs = unisonOscillators[oscillators[ii].type];
+                        for(var j in oscs){
+                            oscs[j].frequency.cancelScheduledValues(time);
+                            oscs[j].frequency.linearRampToValueAtTime(_pitch + oscs[j].offset, time + _glide);
+                        }
+                    }
                 }
             } else {
                 for(var iii in oscillators){
                     oscillators[iii].frequency.cancelScheduledValues(time);
                     oscillators[iii].frequency.setValueAtTime(_pitch, time);
+                    if(_unison){
+                        oscs = unisonOscillators[oscillators[iii].type];
+                        for(var jj in oscs){
+                            oscs[jj].frequency.cancelScheduledValues(time);
+                            oscs[jj].frequency.linearRampToValueAtTime(_pitch + oscs[jj].offset, time + _glide);
+                        }
+                    }
                 }
             }
 
@@ -50,7 +65,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             for(var i = 0; i < waveforms.length; i++){
                 osc = context.createOscillator();
                 osc.type = waveforms[i];
-                oscillators[waveforms[i]] = osc;
+                oscillators[osc.type] = osc;
+                unisonOscillators[osc.type] = {}; //prepare for unison mode
                 osc.gain = context.createGain();
                 if(waveform === waveforms[i]){
                     osc.gain.gain.value = 1;
@@ -63,6 +79,47 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
 
                 modSection.route("LFO", osc, "pitchLFO1", "frequency");
             }
+        }
+
+        function enableUnison(){
+            var osc;
+            for(var o in oscillators){
+                osc = context.createOscillator();
+                osc.type = oscillators[o].type;
+                unisonOscillators[osc.type]["over"] = osc;
+                osc.offset = 1;
+                osc.frequency.value = oscillators[o].frequency.value + osc.offset;
+                console.log("freq1", oscillators[o].frequency.value + osc.offset);
+                osc.connect(oscillators[o].gain);
+                osc.start(0);
+
+                modSection.route("LFO", osc, "pitchLFO1", "frequency");
+
+                osc = context.createOscillator();
+                osc.type = oscillators[o].type;
+                unisonOscillators[osc.type]["under"] = osc;
+                osc.offset = -1;
+                osc.frequency.value = oscillators[o].frequency.value + osc.offset;
+                console.log("freq2", oscillators[o].frequency.value + osc.offset);
+                osc.connect(oscillators[o].gain);
+                osc.start(0);
+
+                modSection.route("LFO", osc, "pitchLFO1", "frequency");
+                console.log(unisonOscillators);
+                oscillators[o].gain.gain.value = oscillators[o].gain.gain.value / 1.3;
+            }
+            console.log(oscillators);
+        }
+
+        function disableUnison(){
+            for(var o in unisonOscillators){
+                for(var oo in unisonOscillators[o]){
+                    unisonOscillators[o][oo].disconnect();
+                    delete unisonOscillators[o][oo];
+                }
+                oscillators[o].gain.gain.value = oscillators[o].gain.gain.value * 1.3;
+            }
+            console.log(oscillators);
         }
 
         function disconnect() {
@@ -114,6 +171,19 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                                 oscillators[i].frequency.setValueAtTime(pitch * _tune, context.currentTime);
                             }
                         }
+                    },
+                    unison: {
+                        type: "switch",
+                        value: "deselected",
+                        onChange: function(e) {
+                            if(e.target.checked){
+                                _unison = true;
+                                enableUnison();
+                            } else {
+                                _unison = false;
+                                disableUnison();
+                            }
+                        }
                     }
                 }
 
@@ -128,7 +198,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             disconnect: disconnect,
             output: output,
             getViewData: getViewData,
-            init: init
+            init: init,
+            enableUnison: enableUnison
         };
     };
 });

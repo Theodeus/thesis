@@ -6,7 +6,7 @@ define(["context", "statics"], function(context, STATICS) {
             oscillator = context.createOscillator(),
             _frequency = 2,
             _amount = 1,
-            LFOreset = true,
+            _LFOreset = true,
             _waveform = "triangle",
             _tempoSync = false;
 
@@ -21,11 +21,11 @@ define(["context", "statics"], function(context, STATICS) {
         oscillator.connect(amountNode);
 
         function start(data) {
-            if(LFOreset){
+            if(_LFOreset){
                 //new oscillator to reset the phase of the LFO
                 oscillator.disconnect();
                 oscillator = context.createOscillator(),
-                oscillator.frequency.value = _frequency;
+                changeFrequency(_frequency);
                 oscillator.type = _waveform;
                 oscillator.start(0);
                 amountNode.gain.value = _amount;
@@ -77,6 +77,17 @@ define(["context", "statics"], function(context, STATICS) {
                                 _tempoSync = false;
                             }
                             changeFrequency(_frequency);
+                        }
+                    },
+                    LFOreset: {
+                        type: "switch",
+                        value: "selected",
+                        onChange: function(e) {
+                            if(e.target.checked){
+                                _LFOreset = true;
+                            } else {
+                                _LFOreset = false;
+                            }
                         }
                     },
                     waveform: {

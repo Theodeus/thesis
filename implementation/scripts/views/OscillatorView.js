@@ -26,6 +26,9 @@ define(["utils"], function(utils) {
                     } else if(oscillators[o].properties[prop].type === "selector"){
                         var selection = utils.createSelector(oscillators[o].properties[prop].onChange, oscillators[o].properties[prop].currentOption, oscillators[o].properties[prop].options, "selector");
                         section.appendChild(selection);
+                    } else if(oscillators[o].properties[prop].type === "switch"){
+                        var s = utils.createSwitch(oscillators[o].properties[prop].onChange, oscillators[o].properties[prop].value, "oscChecker");
+                        section.appendChild(s);
                     }
                 }
 
