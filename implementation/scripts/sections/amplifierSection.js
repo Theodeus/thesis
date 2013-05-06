@@ -1,10 +1,21 @@
 define(["sections/modulationSection", "context"], function(modSection, context) {
     var input = context.createGain(),
+        left = context.createGain(),
+        right = context.createGain(),
         output = context.createGain(),
+        splitter = context.createChannelSplitter(2),
+        merger = context.createChannelMerger(2),
         _level = 0.5;
 
     output.gain.value = 0;
-    input.connect(output);
+    left.gain.value = 0.5;
+    right.gain.value = 0.5;
+    input.connect(splitter);
+    splitter.connect(left, 0);
+    splitter.connect(right, 1);
+    left.connect(merger, 0, 0);
+    right.connect(merger, 0, 1);
+    merger.connect(output);
 
     function connect(destination) {
         output.connect(destination);
@@ -20,6 +31,18 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
         var data = {
             type: "amplifier",
             properties: {
+                panning: {
+                    type: "slider",
+                    min: -0.5,
+                    max: 0.5,
+                    value: 0,
+                    step: 0.01,
+                    onChange: function(e){
+                        var value = parseFloat(e.target.value);
+                        left.gain.value = 0.5 - value;
+                        right.gain.value = 0.5 + value;
+                    }
+                },
                 level: {
                     type: "slider",
                     min: 0,

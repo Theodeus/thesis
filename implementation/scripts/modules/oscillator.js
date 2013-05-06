@@ -89,7 +89,6 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 unisonOscillators[osc.type]["over"] = osc;
                 osc.offset = 1;
                 osc.frequency.value = oscillators[o].frequency.value + osc.offset;
-                console.log("freq1", oscillators[o].frequency.value + osc.offset);
                 osc.connect(oscillators[o].gain);
                 osc.start(0);
 
@@ -100,15 +99,12 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 unisonOscillators[osc.type]["under"] = osc;
                 osc.offset = -1;
                 osc.frequency.value = oscillators[o].frequency.value + osc.offset;
-                console.log("freq2", oscillators[o].frequency.value + osc.offset);
                 osc.connect(oscillators[o].gain);
                 osc.start(0);
 
                 modSection.route("LFO", osc, "pitchLFO1", "frequency");
-                console.log(unisonOscillators);
                 oscillators[o].gain.gain.value = oscillators[o].gain.gain.value / 1.3;
             }
-            console.log(oscillators);
         }
 
         function disableUnison(){

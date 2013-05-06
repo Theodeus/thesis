@@ -26,7 +26,6 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         }
     }
     function route(modType, destination, modulatorName, propertyName, modulatorData){
-        console.log("route", modType);
         var modulator = getModulator(modulatorName, modType, modulatorData);
         modulator.modulate(destination[propertyName]);
     }
@@ -40,7 +39,6 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         switch(modType){
             case "LFO":
                 modules[modulatorName] = new lfo(modulatorData);
-                console.log("added LFO", modules);
                 return modules[modulatorName];
             case "envelopeGenerator":
                 modules[modulatorName] = new envGenerator(modulatorData);

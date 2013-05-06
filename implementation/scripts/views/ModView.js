@@ -1,6 +1,5 @@
 define(["utils"], function(utils) {
     return function(data, x, y){
-        console.log("gen mod view", data);
         var modules = data.modules,
             i = 0,
             j = 0;
