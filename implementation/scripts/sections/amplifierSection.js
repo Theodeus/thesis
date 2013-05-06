@@ -27,7 +27,10 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
                     value: 0.65,
                     step: 0.001,
                     onChange: function(e) {
-                        output.gain.parameterValue = _level = Math.pow(parseFloat(e.target.value), 1.5);
+                        var value =  Math.pow(parseFloat(e.target.value), 1.5);
+                        output.gain.cancelScheduledValues(context.currentTime);
+                        output.gain.setValueAtTime(value, context.currentTime);
+                        output.gain.parameterValue = _level = value;
                     }
                 }
             }
