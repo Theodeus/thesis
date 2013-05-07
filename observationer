@@ -19,3 +19,7 @@ Safari har en utdaterad implementation. Inte säker på om den ska stödjas alls
 Fixade mixer. Fick en del andra moduler att falla på plats också. Outputs på oscillatorer etc. De ska inte tänka på var de ska skicka signalen.
 
 Enheterna får ange hur de vill bli påverkade, så får viewsen göra hur de vill. getViewData.
+
+använder inte PanNode i web audio, bygger egen med splitter/merger och två gain. Modulation kommer bli krångligare...
+
+NÄR ETT LFO PÅVERKAR EN WEB AUDIO PROP ändras inte .value! BAH.

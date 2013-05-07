@@ -1,10 +1,14 @@
 define(["context", "statics"], function(context, STATICS) {
 
-    return function() {
+    return function(data) {
+
+        if(!data){
+            data = {};
+        }
 
         var destinations = [],
             oscillator = context.createOscillator(),
-            _frequency = 2,
+            _frequency = data.frequency || 2,
             _amount = 1,
             _LFOreset = true,
             _waveform = "triangle",
@@ -40,6 +44,7 @@ define(["context", "statics"], function(context, STATICS) {
         function modulate(destination){
             destinations.push(destination);
             amountNode.connect(destination);
+            console.error("added", destination);
         }
 
         function getViewData(){

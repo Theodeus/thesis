@@ -16,14 +16,15 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
 
             //calculate the frequency of the note we're going to play
             pitch = getFrequency(note);
-            var _pitch = pitch * _tune;
+            var _pitch = pitch * _tune,
+                oscs;
             //if glide is on and a note is currently playing, we need to tween the frequency of the currently playing note, or else just set the frequency
             if (playing && _glide > 0) {
                 for(var ii in oscillators){
                     oscillators[ii].frequency.cancelScheduledValues(time);
                     oscillators[ii].frequency.linearRampToValueAtTime(_pitch, time + _glide);
                     if(_unison){
-                        var oscs = unisonOscillators[oscillators[ii].type];
+                        oscs = unisonOscillators[oscillators[ii].type];
                         for(var j in oscs){
                             oscs[j].frequency.cancelScheduledValues(time);
                             oscs[j].frequency.linearRampToValueAtTime(_pitch + oscs[j].offset, time + _glide);
@@ -115,7 +116,6 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 }
                 oscillators[o].gain.gain.value = oscillators[o].gain.gain.value * 1.3;
             }
-            console.log(oscillators);
         }
 
         function disconnect() {

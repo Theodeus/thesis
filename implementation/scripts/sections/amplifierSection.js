@@ -1,11 +1,12 @@
-define(["sections/modulationSection", "context"], function(modSection, context) {
+define(["sections/modulationSection", "modules/customModulator", "context"], function(modSection, customMod, context) {
     var input = context.createGain(),
         left = context.createGain(),
         right = context.createGain(),
         output = context.createGain(),
         splitter = context.createChannelSplitter(2),
         merger = context.createChannelMerger(2),
-        _level = 0.5;
+        _level = 0.5,
+        panDestination;
 
     output.gain.value = 0;
     left.gain.value = 0.5;
@@ -21,6 +22,14 @@ define(["sections/modulationSection", "context"], function(modSection, context) 
         output.connect(destination);
         output.gain.parameterValue = _level;
         modSection.route("envelopeGenerator", output, "ampEnv", "gain", {amountMin: 0});
+        panDestination = customMod.createCustomModulationDestination(function(value){
+            value -= 0.5;
+            left.gain.value = 0.5 - value;
+            right.gain.value = 0.5 + value;
+            //console.log("value", value);
+        });
+        console.log(panDestination);
+        modSection.route("LFO", panDestination.input, "panLFO", "gain", {frequency: 0.1});
     }
 
     function disconnect() {
