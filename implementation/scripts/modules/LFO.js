@@ -44,7 +44,6 @@ define(["context", "statics"], function(context, STATICS) {
         function modulate(destination){
             destinations.push(destination);
             amountNode.connect(destination);
-            console.error("added", destination);
         }
 
         function getViewData(){

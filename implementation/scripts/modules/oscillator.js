@@ -3,6 +3,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
     return function() {
         var pitch = 440,
             _tune = 1,
+            _finetune = 0,
+            _coarsetune = 1,
             _glide = 0.2,
             waveform = "sawtooth",
             oscillators = {},
@@ -154,14 +156,30 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                             }
                         }
                     },
-                    tune: {
+                    finetune: {
+                        type: "slider",
+                        min: -0.07,
+                        max: 0.07,
+                        value: 0,
+                        step: 0.00001,
+                        onChange: function(e){
+                            _finetune = parseFloat(e.target.value);
+                            _tune = _finetune + _coarsetune;
+                            for(var i in oscillators){
+                                oscillators[i].frequency.cancelScheduledValues(context.currentTime);
+                                oscillators[i].frequency.setValueAtTime(pitch * _tune, context.currentTime);
+                            }
+                        }
+                    },
+                    coarsetune: {
                         type: "slider",
                         min: 0.25,
                         max: 2,
                         value: 1,
                         step: 0.01,
                         onChange: function(e){
-                            _tune = parseFloat(e.target.value);
+                            _coarsetune = parseFloat(e.target.value);
+                            _tune = _finetune + _coarsetune;
                             for(var i in oscillators){
                                 oscillators[i].frequency.cancelScheduledValues(context.currentTime);
                                 oscillators[i].frequency.setValueAtTime(pitch * _tune, context.currentTime);
