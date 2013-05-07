@@ -12,7 +12,8 @@ define(["context", "statics"], function(context, STATICS) {
             _amount = 1,
             _LFOreset = true,
             _waveform = "triangle",
-            _tempoSync = false;
+            _tempoSync = false,
+            _tempo = 120;
 
         var amountNode = context.createGain();
         amountNode.gain.value = _amount;
@@ -83,6 +84,15 @@ define(["context", "statics"], function(context, STATICS) {
                             changeFrequency(_frequency);
                         }
                     },
+                    tempo: {
+                        type: "numeric",
+                        value: 120,
+                        onChange: function(e) {
+                            _tempo = parseFloat(e.target.value);
+                            console.log(_tempo);
+                            changeFrequency(_frequency);
+                        }
+                    },
                     LFOreset: {
                         type: "switch",
                         value: "selected",
@@ -112,21 +122,21 @@ define(["context", "statics"], function(context, STATICS) {
             if(_tempoSync){
                 var value = freq / 200;
                 if(value >= 0 && value < 0.14){
-                    value = (60 / context.tempo) / 4;
+                    value = (60 / _tempo) * 16;
                 } else if(value >= 0.14 && value < 0.28) {
-                    value = (60 / context.tempo) / 2;
+                    value = (60 / _tempo) * 8;
                 } else if(value >= 0.28 && value < 0.42) {
-                    value = (60 / context.tempo);
+                    value = (60 / _tempo) * 4;
                 } else if(value >= 0.42 && value < 0.56) {
-                    value = (60 / context.tempo) * 2;
+                    value = (60 / _tempo) * 2;
                 } else if(value >= 0.56 && value < 0.7) {
-                    value = (60 / context.tempo) * 4;
+                    value = (60 / _tempo);
                 } else if(value >= 0.7 && value < 0.84) {
-                    value = (60 / context.tempo) * 8;
+                    value = (60 / _tempo) / 2;
                 } else {
-                    value = (60 / context.tempo) * 16;
+                    value = (60 / _tempo) / 4;
                 }
-                oscillator.frequency.value = value;
+                oscillator.frequency.value = 1 / value;
             } else {
                 oscillator.frequency.value = freq;
             }

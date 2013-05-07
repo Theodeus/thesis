@@ -29,6 +29,9 @@ define(["utils"], function(utils) {
                     } else if(modules[m].properties[prop].type === "switch"){
                         var s = utils.createSwitch(modules[m].properties[prop].onChange, modules[m].properties[prop].value, "modChecker");
                         propSection.appendChild(s);
+                    } else if(modules[m].properties[prop].type === "numeric"){
+                        var s = utils.createNumericInput(modules[m].properties[prop].onChange, modules[m].properties[prop].value, "modChecker");
+                        propSection.appendChild(s);
                     }
                     section.appendChild(propSection);
                     j++;

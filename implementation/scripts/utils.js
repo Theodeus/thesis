@@ -47,6 +47,15 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         return s;
     }
 
+    function createNumericInput(callback, value, className){
+        var s = document.createElement("input");
+        s.type = "number";
+        s.className = className;
+        s.value = value;
+        s.onchange = callback;
+        return s;
+    }
+
     function generateChangeCallback(target){
         return function(e){
             if(target.value !== undefined){
@@ -63,6 +72,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         createParagraph: createParagraph,
         generateChangeCallback: generateChangeCallback,
         createSelector: createSelector,
-        createSwitch: createSwitch
+        createSwitch: createSwitch,
+        createNumericInput: createNumericInput
     };
 });
