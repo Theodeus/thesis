@@ -5,7 +5,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             _tune = 1,
             _finetune = 0,
             _coarsetune = 1,
-            _glide = 0.2,
+            _glide = 0,
             waveform = "sawtooth",
             oscillators = {},
             unisonOscillators = {},

@@ -7,8 +7,6 @@
     <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <style>
         body{
-            background-color: #333;
-            color: #ddd;
             font-size: 35px;
             font-family: 'Actor', sans-serif;
         }
@@ -27,18 +25,14 @@
         }
         .propertyTitle{
             font-size: 12px;
-            border-top: solid 1px #321;
             padding-top: 3px;
         }
         .mixerSection{
-            width: 155px;
+            width: 157px;
             height: 258px;
-            background-color: #432;
             left: 336px;
         }
-        .mixerSection .propertyTitle{
-            border-top: none;
-        }
+
         .mixerSlider{
             width: 20px;
             height: 190px;
@@ -53,15 +47,17 @@
             float:left;
         }
         .oscillatorSection{
-            width: 305px;
-            height: 315px;
-            background-color: #439;
+            width: 309px;
+            height: 393px;
         }
         .oscillator{
             width: 100px;
-            height: 226px;
+            height: 360px;
             position:relative;
             float:left;
+        }
+        .filterSection select{
+            margin: 0 0 0 119px;
         }
         .oscillator select{
             margin: 0 0 0 7.5px;
@@ -72,8 +68,15 @@
         }
         .filterSection{
             width: 320px;
-            background-color: #492;
+            height: 258px;
             left: 512px;
+        }
+        .filterProperty{
+            position:relative;
+            float:left;
+            height: 73px;
+            width: 316px;
+            margin-top: 2px
         }
         .filterSlider{
             width: 300px;
@@ -81,24 +84,29 @@
         }
 
         .ampSection{
-            width: 81px;
-            height: 248px;
-            background-color: #932;
+            width: 107px;
+            height: 258px;
             left:840px;
         }
         .ampSlider{
             width: 20px;
             height: 190px;
-            margin: 0 0 0 30px;
+            margin: 0 0 0 15px;
             appearance: slider-vertical;
             -webkit-appearance: slider-vertical;
+        }
+        .ampProperty{
+            position:relative;
+            float:left;
+            width: 50px;
+            height: 226px;
         }
 
         .modSection{
             width: 787px;
             height: 292px;
-            background-color: #499;
-            top: 600px;
+            top: 430px;
+            left: 101px;
         }
         .modSlider{
             width: 20px;
@@ -110,7 +118,6 @@
         .modUnit{
             width: 260px;
             height: 259px;
-            background-color: #999;
             position:relative;
             float:left;
         }
@@ -121,33 +128,55 @@
             float:left;
         }
         .modPropertyselector{
-            width: 84px;
-            height: 227px;
+            width: 66px;
+            height: 64px;
             position:relative;
             float:left;
         }
+
         .modPropertyswitch{
-            width: 84px;
-            height: 227px;
+            width: 74px;
+            height: 64px;
             position:relative;
             float:left;
+        }
+        .modPropertyswitch input{
+            margin-right: 15px;
         }
         .modPropertynumeric{
-            width: 84px;
-            height: 227px;
+            width: 45px;
+            height: 64px;
+            margin-right: 15px;
             position:relative;
             float:left;
         }
-        .modSection .propertyTitle{
-            border-top: none;
+        input[type="number"]{
+            width:40px;
+        }
+
+
+        /*colors*/
+
+        body{
+            background-color: #333;
+            color: #ddd;
+        }
+
+        .modSection, .oscillatorSection, .mixerSection, .filterSection, .ampSection{
+            background-color: #444;
+        }
+
+        .oscillator, .modUnit, .mixerChannel, .ampProperty, .filterProperty{
+            background-color: #555;
+            margin-left: 2px;
         }
 
     </style>
 
 </head>
 <body>
-    <p>Play with your keyboard</p>
-    <p class="bread">This is a virtual analog synthesizer made by Oskar Eriksson.</p>
+    <!--<p>Play with your keyboard</p>
+    <p class="bread">This is a virtual analog synthesizer made by Oskar Eriksson.</p>-->
 
     <script src="scripts/require.js"></script>
     <script>

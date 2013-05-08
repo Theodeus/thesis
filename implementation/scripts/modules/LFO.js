@@ -84,15 +84,6 @@ define(["context", "statics"], function(context, STATICS) {
                             changeFrequency(_frequency);
                         }
                     },
-                    tempo: {
-                        type: "numeric",
-                        value: 120,
-                        onChange: function(e) {
-                            _tempo = parseFloat(e.target.value);
-                            console.log(_tempo);
-                            changeFrequency(_frequency);
-                        }
-                    },
                     LFOreset: {
                         type: "switch",
                         value: "selected",
@@ -102,6 +93,15 @@ define(["context", "statics"], function(context, STATICS) {
                             } else {
                                 _LFOreset = false;
                             }
+                        }
+                    },
+                    tempo: {
+                        type: "numeric",
+                        value: 120,
+                        onChange: function(e) {
+                            _tempo = parseFloat(e.target.value);
+                            console.log(_tempo);
+                            changeFrequency(_frequency);
                         }
                     },
                     waveform: {

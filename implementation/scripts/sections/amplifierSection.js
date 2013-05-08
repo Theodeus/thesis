@@ -40,18 +40,6 @@ define(["sections/modulationSection", "modules/customModulator", "context"], fun
         var data = {
             type: "amplifier",
             properties: {
-                panning: {
-                    type: "slider",
-                    min: -0.5,
-                    max: 0.5,
-                    value: 0,
-                    step: 0.01,
-                    onChange: function(e){
-                        var value = parseFloat(e.target.value);
-                        left.gain.value = 0.5 - value;
-                        right.gain.value = 0.5 + value;
-                    }
-                },
                 level: {
                     type: "slider",
                     min: 0,
@@ -63,6 +51,18 @@ define(["sections/modulationSection", "modules/customModulator", "context"], fun
                         output.gain.cancelScheduledValues(context.currentTime);
                         output.gain.setValueAtTime(value, context.currentTime);
                         output.gain.parameterValue = _level = value;
+                    }
+                },
+                panning: {
+                    type: "slider",
+                    min: -0.5,
+                    max: 0.5,
+                    value: 0,
+                    step: 0.01,
+                    onChange: function(e){
+                        var value = parseFloat(e.target.value);
+                        left.gain.value = 0.5 - value;
+                        right.gain.value = 0.5 + value;
                     }
                 }
             }

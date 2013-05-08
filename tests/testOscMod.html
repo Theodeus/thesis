@@ -29,8 +29,8 @@
         osc2.start(0);
 
         setInterval(function(){
-            console.log(input.gain.value, filter.frequency.value, osc2.frequency.value);
-        }, 10);
+            console.log(input.gain, filter.frequency);
+        }, 1000);
 
         input.connect(context.destination);
         filter.connect(context.destination);
