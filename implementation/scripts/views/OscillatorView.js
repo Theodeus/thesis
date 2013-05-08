@@ -39,6 +39,6 @@ define(["utils"], function(utils) {
             container.appendChild(section);
         }
 
-        document.body.appendChild(container);
+        document.getElementById("content").appendChild(container);
     };
 });

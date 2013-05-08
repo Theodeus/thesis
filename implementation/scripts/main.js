@@ -16,4 +16,8 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     //keyboard routing
     keyboard.connect(oscSection.input);
     keyboard.connect(modSection.input);
+
+
+    //content position
+    document.getElementById("content").style.top = (window.innerHeight/2 - (696/2)) + "px";
 });

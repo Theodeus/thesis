@@ -36,14 +36,6 @@ define(["sections/modulationSection","context"], function(modSection, context) {
             var data = {
                 type: "filter",
                 properties: {
-                    type: {
-                        type: "selector",
-                        options: types,
-                        currentOption: _type,
-                        onChange: function(e){
-                            filter.type = _type = e.target.value;
-                        }
-                    },
                     cutoffFrequency: {
                         type: "slider",
                         min: 0,
@@ -56,7 +48,6 @@ define(["sections/modulationSection","context"], function(modSection, context) {
                             filter.frequency.parameterValue = _cutoffFrequency = value;
                             filter.frequency.parameterMinValue = _cutoffFrequency / 2;
                             filter.frequency.setValueAtTime(value, context.currentTime);
-                            console.log(filter.frequency.parameterValue, filter.frequency.parameterMinValue);
                         }
                     },
                     resonance: {
@@ -67,6 +58,14 @@ define(["sections/modulationSection","context"], function(modSection, context) {
                         step: 0.001,
                         onChange: function(e){
                             filter.Q.value = _resonance = Math.pow(parseFloat(e.target.value), 4.5) * 50;
+                        }
+                    },
+                    type: {
+                        type: "selector",
+                        options: types,
+                        currentOption: _type,
+                        onChange: function(e){
+                            filter.type = _type = e.target.value;
                         }
                     }
                 }

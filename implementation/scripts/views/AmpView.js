@@ -22,6 +22,6 @@ define(["utils"], function(utils) {
                 container.appendChild(propSection);
             }
         }
-        document.body.appendChild(container);
+        document.getElementById("content").appendChild(container);
     };
 });

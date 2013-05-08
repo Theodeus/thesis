@@ -18,6 +18,6 @@ define(["utils"], function(utils) {
             container.appendChild(channel);
             i++;
         }
-        document.body.appendChild(container);
+        document.getElementById("content").appendChild(container);
     };
 });
