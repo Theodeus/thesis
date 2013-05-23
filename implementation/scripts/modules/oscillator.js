@@ -9,7 +9,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             waveform = "sawtooth",
             oscillators = {},
             unisonOscillators = {},
-            waveforms = ["sawtooth", "square", "triangle"],
+            waveforms = ["sawtooth", "square", "triangle", "sine"],
             playing = false,
             output = context.createGain(),
             _unison = false;
@@ -64,7 +64,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
         }
 
         function init(){
-            var osc;
+            var osc,
+                currentTime = context.currentTime;
             for(var i = 0; i < waveforms.length; i++){
                 osc = context.createOscillator();
                 osc.type = waveforms[i];
@@ -78,7 +79,8 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 }
                 osc.connect(osc.gain);
                 osc.gain.connect(output);
-                osc.start(0);
+                //try to start all oscillators at the same time to avoid phasing
+                osc.start(currentTime + 0.5);
 
                 modSection.route("LFO", osc, "pitchLFO1", "frequency");
             }

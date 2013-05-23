@@ -40,6 +40,34 @@ h1 {
 
 
 
+.mixerSection{
+    width: 157px;
+    height: 258px;
+    left: 320px;
+    top:135px;
+}
+.oscillatorSection{
+    width: 309px;
+    height: 393px;
+}
+.filterSection{
+    width: 320px;
+    height: 258px;
+    left: 489px;
+    top:135px;
+}
+.ampSection{
+    width: 107px;
+    height: 258px;
+    left:821px;
+    top:135px;
+}
+.modSection{
+    width: 787px;
+    height: 292px;
+    top: 404px;
+    left: 140px;
+}
 
 .sliderTitle, .sectionTitle, .propertyTitle{
     font-size: 16px;
@@ -51,21 +79,12 @@ h1 {
     font-size: 12px;
     padding-top: 3px;
 }
-.mixerSection{
-    width: 157px;
-    height: 258px;
-    left: 320px;
-    top:135px;
-}
+
 .mixerChannel{
     width: 50px;
     height: 226px;
     position:relative;
     float:left;
-}
-.oscillatorSection{
-    width: 309px;
-    height: 393px;
 }
 .oscillator{
     width: 100px;
@@ -81,12 +100,7 @@ h1 {
     width: 70px;
     margin: 0 0 0 15px;
 }
-.filterSection{
-    width: 320px;
-    height: 258px;
-    left: 489px;
-    top:135px;
-}
+
 .filterProperty{
     position:relative;
     float:left;
@@ -103,12 +117,7 @@ h1 {
     margin: 0 0 0 119px;
 }
 
-.ampSection{
-    width: 107px;
-    height: 258px;
-    left:821px;
-    top:135px;
-}
+
 .ampProperty{
     position:relative;
     float:left;
@@ -116,12 +125,7 @@ h1 {
     height: 226px;
 }
 
-.modSection{
-    width: 787px;
-    height: 292px;
-    top: 404px;
-    left: 140px;
-}
+
 .modUnit{
     width: 260px;
     height: 259px;

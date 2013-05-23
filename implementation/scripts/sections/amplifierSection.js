@@ -63,6 +63,7 @@ define(["sections/modulationSection", "modules/customModulator", "context"], fun
                         var value = parseFloat(e.target.value);
                         left.gain.value = 0.5 - value;
                         right.gain.value = 0.5 + value;
+                        console.log("left:", left.gain.value, "right", right.gain.value);
                     }
                 }
             }

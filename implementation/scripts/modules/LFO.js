@@ -64,7 +64,7 @@ define(["context", "statics"], function(context, STATICS) {
                     rate: {
                         type: "slider",
                         min: 0,
-                        max: 200,
+                        max: 20,
                         value: 1,
                         step: 0.001,
                         onChange: function(e) {
@@ -120,7 +120,7 @@ define(["context", "statics"], function(context, STATICS) {
 
         function changeFrequency(freq){
             if(_tempoSync){
-                var value = freq / 200;
+                var value = freq / 20;
                 if(value >= 0 && value < 0.14){
                     value = (60 / _tempo) * 16;
                 } else if(value >= 0.14 && value < 0.28) {
