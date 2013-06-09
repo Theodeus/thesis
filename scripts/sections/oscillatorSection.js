@@ -8,7 +8,7 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         input = function(type, data){
             switch(type){
                 case "noteOn":
-                    start(data.note, data.time);
+                    start(data.note, data.time, data);
                     break;
                 case "noteOff":
                     stop(data.note, data.time);
@@ -23,9 +23,9 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         oscillators[o].init();
     }
 
-    function start(note, time) {
+    function start(note, time, data) {
         for(var osc in oscillators){
-            oscillators[osc].start(note, time || context.currentTime);
+            oscillators[osc].start(note, time || context.currentTime, data);
         }
     }
 

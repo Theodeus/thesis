@@ -82,7 +82,10 @@ define([], function() {
         if (realNote > 127) {
             realNote = 127;
         }
-        send("noteOn", {note: realNote});
+        send("noteOn", {
+            note: realNote,
+            velocity: Math.floor(Math.random()*50 + 75)
+        });
     });
 
     window.addEventListener("keyup", function(e) {
