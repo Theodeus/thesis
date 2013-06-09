@@ -5,7 +5,7 @@ define(["context", "statics"], function(context, STATICS) {
             destination,
             currentNote = -1,
             BUFFERLENGTH = 4096 * 12,
-            node = context.createBufferSource(),
+            noise = context.createBufferSource(),
             buffer = context.createBuffer(2, BUFFERLENGTH, context.sampleRate),
             filter,
             output = context.createGain();
@@ -40,13 +40,13 @@ define(["context", "statics"], function(context, STATICS) {
                 left[i] = Math.random();
                 right[i] = Math.random();
             }
-            node.buffer = buffer;
-            node.loop = true;
-            node.start(0);
+            noise.buffer = buffer;
+            noise.loop = true;
+            noise.start(0);
             filter = context.createBiquadFilter();
             filter.type = "highpass";
             filter.Q.value = 0;
-            node.connect(filter);
+            noise.connect(filter);
             filter.connect(output);
             start();
         }
