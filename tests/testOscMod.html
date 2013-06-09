@@ -29,7 +29,7 @@
         osc2.start(0);
 
         setInterval(function(){
-            console.log(input.gain, filter.frequency);
+            console.log(filter.frequency, filter.computedValue);
         }, 1000);
 
         input.connect(context.destination);
