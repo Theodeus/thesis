@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Synthesizer Reference Implementation</title>
+    <link href='http://fonts.googleapis.com/css?family=Actor' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+    <link href='style.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <div id="content">
+        <h1>ArchSynth</h1>
+        <p class="byline">by Oskar Eriksson</p>
+    </div>
+    <script src="scripts/require.js"></script>
+    <script>
+        require.config({
+            baseUrl: "scripts",
+            paths: {
+
+            },
+            waitSeconds: 15
+        });
+        require(["main"]);
+    </script>
+</body>
+</html>
