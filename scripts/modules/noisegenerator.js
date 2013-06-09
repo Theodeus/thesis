@@ -4,8 +4,9 @@ define(["context", "statics"], function(context, STATICS) {
         var pitch = 440,
             destination,
             currentNote = -1,
-            BUFFERLENGTH = 1024,
-            oscillator,
+            BUFFERLENGTH = 4096 * 12,
+            node = context.createBufferSource(),
+            buffer = context.createBuffer(2, BUFFERLENGTH, context.sampleRate),
             filter,
             output = context.createGain();
 
@@ -13,26 +14,14 @@ define(["context", "statics"], function(context, STATICS) {
             currentNote = note;
         }
 
-        function generateNoiseCallback(){
-            return function(e){
-                var left = e.outputBuffer.getChannelData(0);
-                var right = e.outputBuffer.getChannelData(1);
-                for(var i = 0; i < BUFFERLENGTH; i++){
-                    left[i] = Math.random() * 2 - 1;
-                    right[i] = Math.random() * 2 - 1;
-                }
-            };
-        }
-
         function stop(note, time) {
 
         }
 
         function setValue(propertyName, value) {
-            switch(propertyName){
-                default:
-                    console.log("set", propertyName, value);
-                    return;
+            switch (propertyName) {
+                default: console.log("set", propertyName, value);
+                return;
             }
         }
 
@@ -44,18 +33,25 @@ define(["context", "statics"], function(context, STATICS) {
             output.disconnect();
         }
 
-        function init(){
-            oscillator = context.createJavaScriptNode(BUFFERLENGTH, 1, 2);
-            oscillator.onaudioprocess = generateNoiseCallback();
+        function init() {
+            var left = buffer.getChannelData(0);
+                right = buffer.getChannelData(1);
+            for (var i = 0; i < BUFFERLENGTH; i++) {
+                left[i] = Math.random();
+                right[i] = Math.random();
+            }
+            node.buffer = buffer;
+            node.loop = true;
+            node.start(0);
             filter = context.createBiquadFilter();
             filter.type = "highpass";
             filter.Q.value = 0;
-            oscillator.connect(filter);
+            node.connect(filter);
             filter.connect(output);
             start();
         }
 
-        function getViewData(){
+        function getViewData() {
             var data = {
                 type: "noise",
                 properties: {
@@ -65,7 +61,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 1,
                         value: 0,
                         step: 0.001,
-                        onChange: function(e){
+                        onChange: function(e) {
                             filter.frequency.value = parseFloat(e.target.value) * 10000;
                         }
                     },
@@ -75,7 +71,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 1,
                         value: 0,
                         step: 0.001,
-                        onChange: function(e){
+                        onChange: function(e) {
                             filter.Q.value = parseFloat(e.target.value) * 50;
                         }
                     }
