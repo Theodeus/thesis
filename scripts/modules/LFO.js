@@ -13,7 +13,9 @@ define(["context", "statics"], function(context, STATICS) {
             _LFOreset = true,
             _waveform = "triangle",
             _tempoSync = false,
-            _tempo = 120;
+            _tempo = 120,
+            maxRate = data.maxRate || 20,
+            maxAmount = data.maxAmount || 24;
 
         var amountNode = context.createGain();
         amountNode.gain.value = _amount;
@@ -54,7 +56,7 @@ define(["context", "statics"], function(context, STATICS) {
                     amount: {
                         type: "slider",
                         min: 0,
-                        max: 200,
+                        max: maxAmount,
                         value: 1,
                         step: 0.001,
                         onChange: function(e) {
@@ -64,7 +66,7 @@ define(["context", "statics"], function(context, STATICS) {
                     rate: {
                         type: "slider",
                         min: 0,
-                        max: 20,
+                        max: maxRate,
                         value: 1,
                         step: 0.001,
                         onChange: function(e) {
@@ -120,7 +122,7 @@ define(["context", "statics"], function(context, STATICS) {
 
         function changeFrequency(freq) {
             if (_tempoSync) {
-                var value = freq / 20;
+                var value = freq / maxRate;
                 if (value >= 0 && value < 0.14) {
                     value = (60 / _tempo) * 16;
                 } else if (value >= 0.14 && value < 0.28) {
