@@ -19,5 +19,5 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
 
 
     //content position
-    document.getElementById("content").style.top = (window.innerHeight/2 - (696/2)) + "px";
+    document.getElementById("content").style.top = (window.innerHeight / 2 - (696 / 2)) + "px";
 });

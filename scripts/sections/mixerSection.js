@@ -14,21 +14,21 @@ define(["context", "utils"], function(context, utils) {
         output.disconnect();
     }
 
-    function addChannel(channelName, gain){
-        if(channels[channelName]){
+    function addChannel(channelName, gain) {
+        if (channels[channelName]) {
             console.error("channel already exists", channelName, channels);
             return;
         }
         var channelGain = context.createGain();
         channelGain.connect(output);
         channels[channelName] = [channelGain];
-        if(gain !== undefined){
+        if (gain !== undefined) {
             channelGain.gain.value = gain;
         }
     }
 
-    function routeInput(targetChannel, source){
-        if(!channels[targetChannel]){
+    function routeInput(targetChannel, source) {
+        if (!channels[targetChannel]) {
             console.error("trying to connect to non existing channel", targetChannel, source, channels);
             return;
         }
@@ -38,17 +38,19 @@ define(["context", "utils"], function(context, utils) {
 
     function setValue(propertyName, value) {
         switch (propertyName) {
-            default:
-                console.log("set", propertyName, value);
-                return;
+            default: console.log("set", propertyName, value);
+            return;
         }
     }
 
     //generate data that the view can use to create its elements
-    function getViewData(){
-        var data = {channels: {}};
 
-        for(var channel in channels){
+    function getViewData() {
+        var data = {
+            channels: {}
+        };
+
+        for (var channel in channels) {
             data["channels"][channel] = {
                 properties: {
                     level: {

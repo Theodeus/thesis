@@ -5,30 +5,30 @@ define(["context"], function(context) {
         i,
         running = false;
 
-    function addCustomModulator(mod){
+    function addCustomModulator(mod) {
         runningModulators.push(mod);
-        if(!running){
+        if (!running) {
             startModulationEngine();
         }
     }
 
-    function startModulationEngine(){
-        interval = setTimeout(function loop(){
-            for(i = 0; i < runningModulators.length; i++){
+    function startModulationEngine() {
+        interval = setTimeout(function loop() {
+            for (i = 0; i < runningModulators.length; i++) {
                 runningModulators[i].callback(runningModulators[i].input.gain.value);
                 console.log(runningModulators[i].input.gain.value);
             }
             interval = setTimeout(loop, 16);
-        },16);
+        }, 16);
     }
 
-    function removeCustomModulator(mod){
+    function removeCustomModulator(mod) {
         var index = runningModulators.indexOf(mod);
         runningModulators[index].disconnect();
         runningModulators.splice(index, 1);
     }
 
-    function createCustomModulationDestination(callback){
+    function createCustomModulationDestination(callback) {
         var input = context.createGain();
         input.gain.pick = "custom";
         console.log(input);

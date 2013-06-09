@@ -2,7 +2,7 @@ define(["context", "statics"], function(context, STATICS) {
 
     return function(data) {
 
-        if(!data){
+        if (!data) {
             data = {};
         }
 
@@ -26,7 +26,7 @@ define(["context", "statics"], function(context, STATICS) {
         oscillator.connect(amountNode);
 
         function start(data) {
-            if(_LFOreset){
+            if (_LFOreset) {
                 //new oscillator to reset the phase of the LFO
                 oscillator.disconnect();
                 oscillator = context.createOscillator(),
@@ -42,12 +42,12 @@ define(["context", "statics"], function(context, STATICS) {
 
         }
 
-        function modulate(destination){
+        function modulate(destination) {
             destinations.push(destination);
             amountNode.connect(destination);
         }
 
-        function getViewData(){
+        function getViewData() {
             var data = {
                 type: "oscillator",
                 properties: {
@@ -76,7 +76,7 @@ define(["context", "statics"], function(context, STATICS) {
                         type: "switch",
                         value: "deselected",
                         onChange: function(e) {
-                            if(e.target.checked){
+                            if (e.target.checked) {
                                 _tempoSync = true;
                             } else {
                                 _tempoSync = false;
@@ -88,7 +88,7 @@ define(["context", "statics"], function(context, STATICS) {
                         type: "switch",
                         value: "selected",
                         onChange: function(e) {
-                            if(e.target.checked){
+                            if (e.target.checked) {
                                 _LFOreset = true;
                             } else {
                                 _LFOreset = false;
@@ -108,7 +108,7 @@ define(["context", "statics"], function(context, STATICS) {
                         type: "selector",
                         options: ["triangle", "square", "sine", "sawtooth"],
                         currentOption: "triangle",
-                        onChange: function(e){
+                        onChange: function(e) {
                             oscillator.type = _waveform = e.target.value;
                         }
                     }
@@ -118,20 +118,20 @@ define(["context", "statics"], function(context, STATICS) {
             return data;
         }
 
-        function changeFrequency(freq){
-            if(_tempoSync){
+        function changeFrequency(freq) {
+            if (_tempoSync) {
                 var value = freq / 20;
-                if(value >= 0 && value < 0.14){
+                if (value >= 0 && value < 0.14) {
                     value = (60 / _tempo) * 16;
-                } else if(value >= 0.14 && value < 0.28) {
+                } else if (value >= 0.14 && value < 0.28) {
                     value = (60 / _tempo) * 8;
-                } else if(value >= 0.28 && value < 0.42) {
+                } else if (value >= 0.28 && value < 0.42) {
                     value = (60 / _tempo) * 4;
-                } else if(value >= 0.42 && value < 0.56) {
+                } else if (value >= 0.42 && value < 0.56) {
                     value = (60 / _tempo) * 2;
-                } else if(value >= 0.56 && value < 0.7) {
+                } else if (value >= 0.56 && value < 0.7) {
                     value = (60 / _tempo);
-                } else if(value >= 0.7 && value < 0.84) {
+                } else if (value >= 0.7 && value < 0.84) {
                     value = (60 / _tempo) / 2;
                 } else {
                     value = (60 / _tempo) / 4;

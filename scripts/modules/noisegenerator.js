@@ -34,7 +34,7 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function init() {
-            var left = buffer.getChannelData(0);
+            var left = buffer.getChannelData(0),
                 right = buffer.getChannelData(1);
             for (var i = 0; i < BUFFERLENGTH; i++) {
                 left[i] = Math.random();

@@ -5,8 +5,7 @@ define(["sections/modulationSection", "modules/customModulator", "context"], fun
         output = context.createGain(),
         splitter = context.createChannelSplitter(2),
         merger = context.createChannelMerger(2),
-        _level = 0.5,
-        panDestination;
+        _level = 0.5;
 
     output.gain.value = 0;
     left.gain.value = 0.5;

@@ -16,7 +16,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
 
         function start(note, time, data) {
 
-            if(data.velocity !== undefined){
+            if (data.velocity !== undefined) {
                 output.gain.value = data.velocity / 127;
             }
 
@@ -26,24 +26,24 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                 oscs;
             //if glide is on and a note is currently playing, we need to tween the frequency of the currently playing note, or else just set the frequency
             if (playing && _glide > 0) {
-                for(var ii in oscillators){
+                for (var ii in oscillators) {
                     oscillators[ii].frequency.cancelScheduledValues(time);
                     oscillators[ii].frequency.linearRampToValueAtTime(_pitch, time + _glide);
-                    if(_unison){
+                    if (_unison) {
                         oscs = unisonOscillators[oscillators[ii].type];
-                        for(var j in oscs){
+                        for (var j in oscs) {
                             oscs[j].frequency.cancelScheduledValues(time);
                             oscs[j].frequency.linearRampToValueAtTime(_pitch + oscs[j].offset, time + _glide);
                         }
                     }
                 }
             } else {
-                for(var iii in oscillators){
+                for (var iii in oscillators) {
                     oscillators[iii].frequency.cancelScheduledValues(time);
                     oscillators[iii].frequency.setValueAtTime(_pitch, time);
-                    if(_unison){
+                    if (_unison) {
                         oscs = unisonOscillators[oscillators[iii].type];
-                        for(var jj in oscs){
+                        for (var jj in oscs) {
                             oscs[jj].frequency.cancelScheduledValues(time);
                             oscs[jj].frequency.linearRampToValueAtTime(_pitch + oscs[jj].offset, time + _glide);
                         }
@@ -67,16 +67,16 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             output.connect(target);
         }
 
-        function init(){
+        function init() {
             var osc,
                 currentTime = context.currentTime;
-            for(var i = 0; i < waveforms.length; i++){
+            for (var i = 0; i < waveforms.length; i++) {
                 osc = context.createOscillator();
                 osc.type = waveforms[i];
                 oscillators[osc.type] = osc;
                 unisonOscillators[osc.type] = {}; //prepare for unison mode
                 osc.gain = context.createGain();
-                if(waveform === waveforms[i]){
+                if (waveform === waveforms[i]) {
                     osc.gain.gain.value = 1;
                 } else {
                     osc.gain.gain.value = 0;
@@ -90,9 +90,9 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             }
         }
 
-        function enableUnison(){
+        function enableUnison() {
             var osc;
-            for(var o in oscillators){
+            for (var o in oscillators) {
                 osc = context.createOscillator();
                 osc.type = oscillators[o].type;
                 unisonOscillators[osc.type]["over"] = osc;
@@ -116,9 +116,9 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             }
         }
 
-        function disableUnison(){
-            for(var o in unisonOscillators){
-                for(var oo in unisonOscillators[o]){
+        function disableUnison() {
+            for (var o in unisonOscillators) {
+                for (var oo in unisonOscillators[o]) {
                     unisonOscillators[o][oo].disconnect();
                     delete unisonOscillators[o][oo];
                 }
@@ -130,7 +130,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             output.disconnect();
         }
 
-        function getViewData(){
+        function getViewData() {
             var data = {
                 type: "oscillator",
                 properties: {
@@ -138,10 +138,10 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                         type: "selector",
                         options: waveforms,
                         currentOption: waveform,
-                        onChange: function(e){
+                        onChange: function(e) {
                             var waveform = e.target.value;
-                            for(var osc in oscillators){
-                                if(oscillators[osc].type === waveform){
+                            for (var osc in oscillators) {
+                                if (oscillators[osc].type === waveform) {
                                     oscillators[osc].gain.gain.value = 1;
                                 } else {
                                     oscillators[osc].gain.gain.value = 0;
@@ -155,9 +155,9 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                         max: 1,
                         value: 0,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _glide = parseFloat(e.target.value);
-                            if(_glide < 0.03){
+                            if (_glide < 0.03) {
                                 _glide = 0;
                             }
                         }
@@ -168,10 +168,10 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                         max: 0.07,
                         value: 0,
                         step: 0.00001,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _finetune = parseFloat(e.target.value);
                             _tune = _finetune + _coarsetune;
-                            for(var i in oscillators){
+                            for (var i in oscillators) {
                                 oscillators[i].frequency.cancelScheduledValues(context.currentTime);
                                 oscillators[i].frequency.setValueAtTime(pitch * _tune, context.currentTime);
                             }
@@ -183,10 +183,10 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                         max: 2,
                         value: 1,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _coarsetune = parseFloat(e.target.value);
                             _tune = _finetune + _coarsetune;
-                            for(var i in oscillators){
+                            for (var i in oscillators) {
                                 oscillators[i].frequency.cancelScheduledValues(context.currentTime);
                                 oscillators[i].frequency.setValueAtTime(pitch * _tune, context.currentTime);
                             }
@@ -196,7 +196,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
                         type: "switch",
                         value: "deselected",
                         onChange: function(e) {
-                            if(e.target.checked){
+                            if (e.target.checked) {
                                 _unison = true;
                                 enableUnison();
                             } else {

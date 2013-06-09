@@ -6,12 +6,12 @@ define([], function() {
         keysDown = {},
         targets = [];
 
-    function connect(target){
+    function connect(target) {
         targets.push(target);
     }
 
-    function send(type, data){
-        for(var i = 0; i < targets.length; i++){
+    function send(type, data) {
+        for (var i = 0; i < targets.length; i++) {
             targets[i](type, data);
         }
     }
@@ -84,7 +84,7 @@ define([], function() {
         }
         send("noteOn", {
             note: realNote,
-            velocity: Math.floor(Math.random()*50 + 75)
+            velocity: Math.floor(Math.random() * 50 + 75)
         });
     });
 
@@ -139,7 +139,9 @@ define([], function() {
         if (realNote > 127) {
             realNote = 127;
         }
-        send("noteOff", {note: realNote});
+        send("noteOff", {
+            note: realNote
+        });
     });
 
 

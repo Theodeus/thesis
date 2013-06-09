@@ -2,7 +2,7 @@ define(["context", "statics"], function(context, STATICS) {
 
     return function(data) {
 
-        if(!data){
+        if (!data) {
             data = {};
         }
 
@@ -20,7 +20,7 @@ define(["context", "statics"], function(context, STATICS) {
             var time = data.time || context.currentTime,
                 paramValue,
                 product;
-            for(var i = 0; i < destinations.length; i++){
+            for (var i = 0; i < destinations.length; i++) {
                 paramValue = destinations[i].parameterValue;
                 product = paramValue * _amount;
                 destinations[i].cancelScheduledValues(time);
@@ -32,11 +32,11 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function stop(data) {
-            if(data.note !== currentNote){
+            if (data.note !== currentNote) {
                 return;
             }
             var time = data.time || context.currentTime;
-            for(var i = 0; i < destinations.length; i++){
+            for (var i = 0; i < destinations.length; i++) {
                 paramMin = destinations[i].parameterMinValue || 0;
                 destinations[i].cancelScheduledValues(time);
                 destinations[i].setValueAtTime(destinations[i].value, time);
@@ -44,11 +44,11 @@ define(["context", "statics"], function(context, STATICS) {
             }
         }
 
-        function modulate(destination){
+        function modulate(destination) {
             destinations.push(destination);
         }
 
-        function getViewData(){
+        function getViewData() {
             var data = {
                 type: "oscillator",
                 properties: {
@@ -58,7 +58,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 5,
                         value: 0.2,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _attack = parseFloat(e.target.value);
                         }
                     },
@@ -68,7 +68,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 5,
                         value: 0.2,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _decay = Math.pow(parseFloat(e.target.value), 1.2);
                         }
                     },
@@ -78,7 +78,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 1,
                         value: 1,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _sustain = parseFloat(e.target.value);
                         }
                     },
@@ -88,7 +88,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 10,
                         value: 0.2,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _release = Math.pow(parseFloat(e.target.value), 1.2);
                         }
                     },
@@ -98,7 +98,7 @@ define(["context", "statics"], function(context, STATICS) {
                         max: 1,
                         value: 0,
                         step: 0.01,
-                        onChange: function(e){
+                        onChange: function(e) {
                             _amount = parseFloat(e.target.value);
                         }
                     }
