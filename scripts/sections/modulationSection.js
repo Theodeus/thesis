@@ -1,12 +1,18 @@
 define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGenerator, lfo, context) {
     var modules = {},
-        input = function(type, data){
-            switch(type){
+        input = function(type, data) {
+            switch (type) {
                 case "noteOn":
                     start(data);
                     break;
                 case "noteOff":
                     stop(data);
+                    break;
+                case "controller":
+                    console.log("controllers will be implemented shortly");
+                    break;
+                case "pitchWheel":
+                    console.log("pitch bend will be implemented shortly");
                     break;
                 default:
                     console.error("received an unknow type of message", type, data);
@@ -14,29 +20,30 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
             }
         };
 
-    function start(data){
-        for(var i in modules){
+    function start(data) {
+        for (var i in modules) {
             modules[i].start(data);
         }
     }
 
-    function stop(data){
-        for(var i in modules){
+    function stop(data) {
+        for (var i in modules) {
             modules[i].stop(data);
         }
     }
-    function route(modType, destination, modulatorName, propertyName, modulatorData){
+
+    function route(modType, destination, modulatorName, propertyName, modulatorData) {
         var modulator = getModulator(modulatorName, modType, modulatorData);
         modulator.modulate(destination[propertyName]);
     }
 
-    function getModulator(modulatorName, modType, modulatorData){
+    function getModulator(modulatorName, modType, modulatorData) {
 
-        if(modules[modulatorName]){
+        if (modules[modulatorName]) {
             return modules[modulatorName];
         }
 
-        switch(modType){
+        switch (modType) {
             case "LFO":
                 modules[modulatorName] = new lfo(modulatorData);
                 return modules[modulatorName];
@@ -49,10 +56,12 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         }
     }
 
-    function getViewData(){
-        var data = {modules: {}};
+    function getViewData() {
+        var data = {
+            modules: {}
+        };
 
-        for(var mod in modules){
+        for (var mod in modules) {
             data["modules"][mod] = modules[mod].getViewData();
         }
         return data;

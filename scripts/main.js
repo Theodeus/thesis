@@ -1,4 +1,16 @@
-define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterSection", "sections/amplifierSection", "sections/modulationSection", "views/MixerView", "views/OscillatorView", "views/FilterView", "views/AmpView", "views/ModView", "context", "sections/keyboard"], function(oscSection, mixSection, filterSection, ampSection, modSection, MixerView, OscillatorView, FilterView, AmpView, ModView, context, keyboard) {
+define(["sections/oscillatorSection",
+        "sections/mixerSection",
+        "sections/filterSection",
+        "sections/amplifierSection",
+        "sections/modulationSection",
+        "views/MixerView",
+        "views/OscillatorView",
+        "views/FilterView",
+        "views/AmpView",
+        "views/ModView",
+        "context",
+        "sections/keyboard",
+        "sections/midiInput",], function(oscSection, mixSection, filterSection, ampSection, modSection, MixerView, OscillatorView, FilterView, AmpView, ModView, context, keyboard, midiInput) {
 
     //audio routing
     //oscSection.connect(mixSection.input);
@@ -16,6 +28,9 @@ define(["sections/oscillatorSection", "sections/mixerSection", "sections/filterS
     //keyboard routing
     keyboard.connect(oscSection.input);
     keyboard.connect(modSection.input);
+
+    midiInput.connect(oscSection.input);
+    midiInput.connect(modSection.input);
 
 
     //content position
