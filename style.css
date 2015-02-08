@@ -24,6 +24,13 @@ h1 {
     font-family: 'Press Start 2P', cursive;
     border-bottom: 3px double #eee;
 }
+.byline a, .byline a:visited {
+    color:#fff;
+    text-decoration: none;
+}
+.byline a:hover {
+    background: #777;
+}
 .bread{
     font-family: 'Abel', sans-serif;
     font-size: 24px;

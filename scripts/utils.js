@@ -14,7 +14,7 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
         slider.max = max;
         slider.step = step;
         slider.value = value;
-        slider.onchange = callback;
+        slider.onchange = slider.oninput = callback;
         return slider;
     }
 
