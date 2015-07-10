@@ -8,6 +8,12 @@ define(["modules/envelopeGenerator", "modules/LFO", "context"], function(envGene
                 case "noteOff":
                     stop(data);
                     break;
+                case "controller":
+                    console.log("controllers will be implemented shortly");
+                    break;
+                case "pitchWheel":
+                    console.log("pitch bend will be implemented shortly");
+                    break;
                 default:
                     console.error("received an unknow type of message", type, data);
                     break;

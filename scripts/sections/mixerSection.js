@@ -38,13 +38,13 @@ define(["context", "utils"], function(context, utils) {
 
     function setValue(propertyName, value) {
         switch (propertyName) {
-            default: console.log("set", propertyName, value);
-            return;
+            default:
+              console.log("set", propertyName, value);
+              return;
         }
     }
 
     //generate data that the view can use to create its elements
-
     function getViewData() {
         var data = {
             channels: {}

@@ -19,9 +19,9 @@ define(["context", "statics"], function(context, STATICS) {
         }
 
         function setValue(propertyName, value) {
-            switch (propertyName) {
-                default: console.log("set", propertyName, value);
-                return;
+            switch(propertyName){
+                default:
+                    return console.log("set", propertyName, value);
             }
         }
 

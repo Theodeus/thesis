@@ -3,29 +3,35 @@ define(["modules/oscillator", "modules/noisegenerator", "sections/modulationSect
         osc1: new osc(),
         osc2: new osc(),
         noise: new noiseGen()
-    },
-        output = context.createGain(),
-        input = function(type, data) {
-            switch (type) {
-                case "noteOn":
-                    start(data.note, data.time, data);
-                    break;
-                case "noteOff":
-                    stop(data.note, data.time);
-                    break;
-                default:
-                    console.error("received an unknow type of message", type, data);
-                    break;
-            }
-        };
+    };
+    output = context.createGain(),
+    input = function(type, data) {
+        switch (type) {
+            case "noteOn":
+                start(data.note, data.time);
+                break;
+            case "noteOff":
+                stop(data.note, data.time);
+                break;
+            case "controller":
+                console.log("controllers will be implemented shortly");
+                break;
+            case "pitchWheel":
+                console.log("pitch bend will be implemented shortly");
+                break;
+            default:
+                console.error("received an unknow type of message", type, data);
+                break;
+        }
+    };
 
     for (var o in oscillators) {
         oscillators[o].init();
     }
 
-    function start(note, time, data) {
+    function start(note, time) {
         for (var osc in oscillators) {
-            oscillators[osc].start(note, time || context.currentTime, data);
+            oscillators[osc].start(note, time || context.currentTime);
         }
     }
 

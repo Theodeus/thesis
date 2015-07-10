@@ -14,11 +14,7 @@ define(["sections/modulationSection", "context", "statics", "utils"], function(m
             output = context.createGain(),
             _unison = false;
 
-        function start(note, time, data) {
-
-            if (data.velocity !== undefined) {
-                output.gain.value = data.velocity / 127;
-            }
+        function start(note, time) {
 
             //calculate the frequency of the note we're going to play
             pitch = getFrequency(note);

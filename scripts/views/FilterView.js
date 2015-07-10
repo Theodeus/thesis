@@ -10,7 +10,7 @@ define(["utils"], function(utils) {
                 propSection = utils.createElement("div", "filterProperty");
                 title = utils.createParagraph(prop, "propertyTitle");
                 propSection.appendChild(title);
-
+                
                 if (data.properties[prop].type === "slider") {
                     var propdata = data.properties[prop];
                     slider = utils.createSlider(propdata.onChange, propdata.min, propdata.max, propdata.value, propdata.step, "filterSlider");
