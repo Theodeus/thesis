@@ -1,5 +1,5 @@
 define([], function() {
-    var context = new webkitAudioContext();
+    var context = new AudioContext();
     context.tempo = 120;
     return context;
 });
